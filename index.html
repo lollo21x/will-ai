@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Local AI</title>
+<style>
+:root{--bg:#0b0d12;--panel:#141821;--line:#232938;--text:#e8ecf4;--dim:#8b93a7;--acc:#7cf0c0;--acc2:#6aa8ff}
+@media (prefers-color-scheme:light){:root{--bg:#f4f6fa;--panel:#fff;--line:#dde2ec;--text:#161a23;--dim:#5d667a;--acc:#0a9f6e;--acc2:#2f6fe0}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.5 -apple-system,system-ui,"Segoe UI",sans-serif;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+header{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+h1{font-size:17px;margin:0;flex:1;min-width:120px}
+h1 span{color:var(--acc)}
+select,button,textarea{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+button{cursor:pointer}
+button.primary{background:var(--acc);color:#06130d;border-color:var(--acc);font-weight:600}
+button:disabled{opacity:.5;cursor:default}
+#status{padding:8px 16px;font-size:13px;color:var(--dim);border-bottom:1px solid var(--line)}
+#bar{height:3px;background:var(--line)}
+#bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--acc),var(--acc2));transition:width .2s}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.m{max-width:85%;padding:10px 14px;border-radius:14px;white-space:pre-wrap;word-wrap:break-word}
+.u{align-self:flex-end;background:var(--acc2);color:#fff}
+.a{align-self:flex-start;background:var(--panel);border:1px solid var(--line)}
+.s{align-self:center;color:var(--dim);font-size:13px;text-align:center}
+form{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+textarea{flex:1;resize:none;max-height:120px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Local <span>AI</span></h1>
+  <select id="model">
+    <option value="Qwen2.5-0.5B-Instruct-q4f16_1-MLC">Qwen2.5 0.5B (leggero)</option>
+    <option value="Llama-3.2-1B-Instruct-q4f16_1-MLC">Llama 3.2 1B</option>
+    <option value="Qwen2.5-1.5B-Instruct-q4f16_1-MLC" selected>Qwen2.5 1.5B (consigliato)</option>
+    <option value="gemma-2-2b-it-q4f16_1-MLC">Gemma 2 2B (pesante)</option>
+  </select>
+  <button id="load" class="primary">Carica modello</button>
+  <button id="ics" title="Importa calendario .ics">Calendario</button>
+  <button id="clear" title="Cancella chat">Reset</button>
+  <input id="file" type="file" accept=".ics,text/calendar" hidden>
+</header>
+<div id="bar"><i></i></div>
+<div id="status">Nessun modello caricato. Il download avviene una sola volta, poi funziona offline.</div>
+<div id="log"></div>
+<form id="f">
+  <textarea id="t" rows="1" placeholder="Scrivi un messaggio..." disabled></textarea>
+  <button id="send" class="primary" disabled>Invia</button>
+</form>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+const log = $('log'), status = $('status'), bar = $('bar').firstElementChild;
+let engine = null, busy = false;
+const store = {
+  get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
+};
+let history = store.get('history', []);
+let events = store.get('events', []);
+
+function bubble(role, text){
+  const d = document.createElement('div');
+  d.className = 'm ' + role; d.textContent = text;
+  log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+function sys(t){ bubble('s', t) }
+history.forEach(m => bubble(m.role === 'user' ? 'u' : 'a', m.content));
+if (!history.length) sys(navigator.gpu ? 'WebGPU disponibile. Carica un modello per iniziare.' : 'WebGPU non disponibile su questo browser: serve Safari 26+ / Chrome recente.');
+if (events.length) sys(events.length + ' eventi del calendario in memoria.');
+
+// --- Calendario: parser ICS minimale (nessun dato lascia il dispositivo) ---
+function parseDate(v){
+  const m = v.match(/(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})(Z)?)?/);
+  if (!m) return null;
+  const [_, y, mo, d, h = 0, mi = 0, s = 0, z] = m;
+  return z ? new Date(Date.UTC(+y, mo - 1, +d, +h, +mi, +s)) : new Date(+y, mo - 1, +d, +h, +mi, +s);
+}
+function parseICS(txt){
+  txt = txt.replace(/\r?\n[ \t]/g, '');
+  return [...txt.matchAll(/BEGIN:VEVENT([\s\S]*?)END:VEVENT/g)].map(([, b]) => {
+    const g = k => (b.match(new RegExp('^' + k + '[^:\\n]*:(.*)$', 'm')) || [])[1]?.trim();
+    const s = g('DTSTART'), start = s && parseDate(s);
+    return start ? { title: g('SUMMARY') || 'Evento', start: start.toISOString(), loc: g('LOCATION') || '' } : null;
+  }).filter(Boolean);
+}
+function upcoming(){
+  const now = Date.now(), lim = now + 14 * 864e5;
+  return events.filter(e => { const t = +new Date(e.start); return t >= now - 36e5 && t <= lim })
+    .sort((a, b) => new Date(a.start) - new Date(b.start)).slice(0, 25)
+    .map(e => '- ' + new Date(e.start).toLocaleString('it-IT', { weekday:'short', day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }) + ': ' + e.title + (e.loc ? ' (' + e.loc + ')' : ''))
+    .join('\n');
+}
+function systemPrompt(){
+  const now = new Date().toLocaleString('it-IT', { dateStyle:'full', timeStyle:'short' });
+  const cal = upcoming();
+  return 'Sei un assistente personale che gira interamente sul dispositivo dell\'utente. Rispondi in italiano, in modo breve e utile. Adesso e\': ' + now + '.' +
+    (cal ? '\nImpegni dei prossimi 14 giorni:\n' + cal : '\nNon hai accesso a impegni di calendario.');
+}
+$('ics').onclick = () => $('file').click();
+$('file').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  events = parseICS(await f.text()); store.set('events', events);
+  sys('Calendario importato: ' + events.length + ' eventi.'); e.target.value = '';
+};
+
+// --- Caricamento modello (WebLLM / WebGPU) ---
+$('load').onclick = async () => {
+  if (!navigator.gpu) return sys('WebGPU non supportato qui.');
+  $('load').disabled = $('model').disabled = true;
+  status.textContent = 'Carico la libreria...';
+  try {
+    const webllm = await import('https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.79/+esm');
+    engine = await webllm.CreateMLCEngine($('model').value, {
+      initProgressCallback: p => { bar.style.width = (p.progress * 100) + '%'; status.textContent = p.text; }
+    });
+    status.textContent = 'Pronto: ' + $('model').selectedOptions[0].text + ' - gira sul tuo dispositivo';
+    $('t').disabled = $('send').disabled = false; $('t').focus();
+  } catch (err) {
+    status.textContent = 'Errore: ' + (err.message || err);
+    $('load').disabled = $('model').disabled = false;
+  }
+};
+
+// --- Chat ---
+$('f').onsubmit = async e => {
+  e.preventDefault();
+  const text = $('t').value.trim();
+  if (!text || !engine || busy) return;
+  busy = true; $('send').disabled = true; $('t').value = '';
+  bubble('u', text); history.push({ role: 'user', content: text });
+  const out = bubble('a', '...'); let acc = '';
+  try {
+    const msgs = [{ role: 'system', content: systemPrompt() }, ...history.slice(-10)];
+    const stream = await engine.chat.completions.create({ messages: msgs, stream: true, temperature: 0.7, max_tokens: 512 });
+    for await (const c of stream){
+      acc += c.choices[0]?.delta?.content || '';
+      out.textContent = acc; log.scrollTop = log.scrollHeight;
+    }
+    history.push({ role: 'assistant', content: acc }); store.set('history', history.slice(-40));
+  } catch (err) { out.textContent = 'Errore: ' + (err.message || err); }
+  busy = false; $('send').disabled = false;
+};
+$('t').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); $('f').requestSubmit(); } });
+$('clear').onclick = () => { history = []; store.set('history', []); log.innerHTML = ''; sys('Chat azzerata.'); };
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+</script>
+</body>
+</html>
