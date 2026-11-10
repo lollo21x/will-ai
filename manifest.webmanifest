@@ -1,0 +1,10 @@
+{
+  "name": "Will AI",
+  "short_name": "Will AI",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0e0e16",
+  "theme_color": "#0e0e16",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
