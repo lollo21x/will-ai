@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0e16">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Will AI">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg">
@@ -12,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500..700&display=swap" rel="stylesheet">
-<title>Local AI</title>
+<title>Will AI</title>
 <style>
 :root{--bg:#0e0e16;--bg2:#15151f;--bg3:#1e1e2b;--line:rgba(255,255,255,.1);--text:#efeefb;--dim:#9795b3;--a:#9b8bff;--b:#4fd1ff;--c:#ffb38a;--ok:#5ee6b0;--bad:#ff7a8a;--serif:"Fraunces",Georgia,serif;--sans:"DM Sans",-apple-system,system-ui,sans-serif}
 @media (prefers-color-scheme:light){:root{--bg:#f7f6fc;--bg2:#fff;--bg3:#eeedf8;--line:rgba(26,23,51,.12);--text:#1a1733;--dim:#68668c;--a:#6a58ff;--ok:#0d9f6e;--bad:#d6334a}}
@@ -24,9 +25,9 @@ button{cursor:pointer;background:none;border:0}
 svg{width:20px;height:20px;flex:none}
 :focus-visible{outline:2px solid var(--a);outline-offset:2px}
 .app{display:flex;height:100dvh}
-.orb{--s:40px;width:var(--s);height:var(--s);position:relative;flex:none;animation:breathe 6s ease-in-out infinite}
-.orb i{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,var(--a),var(--b),var(--c),var(--a));animation:spin 14s linear infinite}
-.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.7),transparent 50%)}
+.orb{--s:40px;width:var(--s);height:var(--s);position:relative;flex:none;border-radius:50%;overflow:hidden;isolation:isolate;animation:breathe 6s ease-in-out infinite}
+.orb i{position:absolute;inset:-14%;border-radius:50%;background:conic-gradient(from 0deg,var(--a),var(--b),var(--c),var(--a));filter:blur(calc(var(--s)*.14));animation:spin 14s linear infinite}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.5),transparent 55%)}
 .orb.think i{animation-duration:2.2s}.orb.think{animation-duration:1.6s}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes breathe{50%{transform:scale(1.06)}}
@@ -141,6 +142,15 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 .hint{font-size:13.5px!important}
 #toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}
 #toast.on{opacity:1;transform:translate(-50%,0)}
+.wrap{flex:1;min-width:0}
+.act{border:1px solid var(--line);background:var(--bg2);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.ah{display:flex;gap:12px;align-items:center}.ah .tile{width:38px;height:38px}
+.ab{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fu{justify-content:flex-start;margin-top:10px}
+.insw{width:100%;display:flex;flex-direction:column;gap:8px;text-align:left;margin-top:6px}
+.insw .sec{margin:0 0 2px 2px}
+.ins{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--bg2);text-align:left;transition:border-color .2s}
+.ins:hover{border-color:var(--a)}.ins .tile{width:34px;height:34px;border-radius:11px}.ins .tile svg{width:18px;height:18px}.ins .t{flex:1;font-size:14.5px}
 @media (max-width:899px){
  #side{position:fixed;inset:0 auto 0 0;width:min(86vw,330px);transform:translateX(-102%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
  #side.open{transform:none}
@@ -154,7 +164,7 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 <div class="app">
 <div id="scrim"></div>
 <aside id="side">
-  <div class="brand"><div class="orb" style="--s:30px"><i></i></div>Local AI</div>
+  <div class="brand"><div class="orb" style="--s:30px"><i></i></div>Will AI</div>
   <button id="new" class="btn primary" data-i="plus">Nuova chat</button>
   <nav id="list" aria-label="Chat recenti"></nav>
   <button id="me" class="me"><span id="av"></span><span id="mn"></span></button>
@@ -173,7 +183,9 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
       <p class="sub">L'intelligenza artificiale che vive solo su questo dispositivo: niente account, niente server.</p>
       <div class="tags" id="tags"></div>
       <button id="start" class="btn primary">Avvia l'AI</button>
+      <div class="insw" id="ins"></div>
       <div class="sugg" id="sugg"></div>
+      <button id="more" class="link">Altri suggerimenti</button>
     </section>
     <div id="msgs"></div>
   </div></div>
@@ -186,7 +198,7 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 
 <dialog id="dm"><div class="dlg">
   <div class="top"><h2>Scegli il modello</h2><button data-close data-i="x" aria-label="Chiudi"></button></div>
-  <p id="gpu">Il download avviene una sola volta, poi l'AI funziona anche offline. Usa il Wi-Fi.</p>
+  <p id="gpu">Il download avviene una sola volta, poi funziona anche offline. Dal livello Smart in su si sbloccano le funzioni intelligenti.</p>
   <div class="mods" id="mods"></div>
   <div id="pr"><div class="bar"><i id="pb"></i></div><div id="pt2"></div></div>
   <button id="ld" class="btn primary">Scarica e avvia</button>
@@ -206,15 +218,22 @@ const IC={menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',plus:'<path d="M12 5v14M5 1
  layers:'<path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20c1-4 4-6 7.5-6s6.5 2 7.5 6"/>',
  cal:'<rect x="3.5" y="5" width="17" height="15" rx="3.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',con:'<rect x="5" y="3.5" width="14" height="17" rx="3"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c.8-2 2.3-3 4-3s3.2 1 4 3"/>',
  doc:'<path d="M7 3.5h7l4 4V20H6.5V4z"/><path d="M9 12h6M9 16h6"/>',note:'<path d="M4 20l1-4L16 5l3 3L8 19z"/>',eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>',
- store:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h6v6H9z"/>',next:'<path d="M9 6l6 6-6 6"/>'};
+ store:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h6v6H9z"/>',next:'<path d="M9 6l6 6-6 6"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 16.5v3M17 18h3"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'};
 const ic=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
 $$('[data-i]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.i)));
 const db={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{toast('Spazio pieno: rimuovi qualche documento')}}};
 const MODELS=[
- {id:'Qwen2.5-0.5B-Instruct-q4f16_1-MLC',n:'Lampo',s:'0,4 GB',d:'Il più rapido, per domande semplici',short:'Qwen 0.5B'},
- {id:'Llama-3.2-1B-Instruct-q4f16_1-MLC',n:'Agile',s:'0,9 GB',d:'Veloce e discreto in italiano',short:'Llama 1B'},
- {id:'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',n:'Equilibrato',s:'1,1 GB',d:'Consigliato: ottimo rapporto qualità/velocità',short:'Qwen 1.5B'},
- {id:'gemma-2-2b-it-q4f16_1-MLC',n:'Profondo',s:'1,6 GB',d:'Il più capace, ma più lento',short:'Gemma 2B'}];
+ {id:'Qwen2.5-0.5B-Instruct-q4f16_1-MLC',n:'Lampo',s:'0,4 GB',t:1,d:'Il più rapido, per domande semplici',short:'Qwen 0.5B'},
+ {id:'Llama-3.2-1B-Instruct-q4f16_1-MLC',n:'Agile',s:'0,9 GB',t:1,d:'Veloce e discreto in italiano',short:'Llama 1B'},
+ {id:'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',n:'Equilibrato',s:'1,1 GB',t:2,d:'Consigliato per iPhone: sblocca le funzioni intelligenti',short:'Qwen 1.5B'},
+ {id:'gemma-2-2b-it-q4f16_1-MLC',n:'Profondo',s:'1,6 GB',t:2,d:'Risposte più sfumate, ma più lento',short:'Gemma 2B'},
+ {id:'Llama-3.2-3B-Instruct-q4f16_1-MLC',n:'Brillante',s:'1,9 GB',t:3,d:'Ottimo italiano, il migliore per gli iPhone recenti',short:'Llama 3B'},
+ {id:'Qwen2.5-3B-Instruct-q4f16_1-MLC',n:'Preciso',s:'1,9 GB',t:3,d:'Forte con liste, dati e ragionamenti',short:'Qwen 3B'},
+ {id:'Phi-3.5-mini-instruct-q4f16_1-MLC',n:'Analista',s:'2,4 GB',t:3,d:'Logica e ragionamento, meno creativo',short:'Phi 3.5'},
+ {id:'Qwen2.5-7B-Instruct-q4f16_1-MLC',n:'Maestro',s:'4,5 GB',t:3,d:'Per Mac e PC potenti: assistente completo',short:'Qwen 7B'},
+ {id:'Llama-3.1-8B-Instruct-q4f16_1-MLC',n:'Gigante',s:'5 GB',t:3,d:'Per Mac e PC potenti: il più capace',short:'Llama 8B'}];
+const TL=['Nessuno','Base','Smart','Pro'];
+const tier=()=>MODELS.find(m=>m.id===modelId)?.t||1;
 const WURL='https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.79/+esm';
 const W=async()=>W.m||(W.m=await import(WURL));
 // ---- hub state (con migrazione dai dati vecchi) ----
@@ -253,14 +272,14 @@ function ctx(){const s=[],m=H.me,nm=(m.first+' '+m.last).trim();
 function sysPrompt(){const now=new Date().toLocaleString('it-IT',{dateStyle:'full',timeStyle:'short'});
  const st={breve:'Rispondi in modo molto breve.',equilibrato:'Rispondi in modo chiaro e conciso.',dettagliato:'Rispondi in modo approfondito e ben strutturato.'}[H.me.style]||'';
  const c=ctx();
- return 'Sei l\'assistente personale dell\'utente, eseguito interamente sul suo dispositivo. Rispondi in italiano, con tono caloroso. '+st+' Adesso è: '+now+'.'+(c?'\n\nInformazioni che l\'utente ha scelto di condividere con te. Usale solo quando servono e non inventare ciò che non è scritto qui:\n'+c:'')}
+ return 'Sei Will, l\'assistente personale dell\'utente, eseguito interamente sul suo dispositivo. Rispondi in italiano, con tono caloroso. '+st+' Adesso è: '+now+'.'+(c?'\n\nInformazioni che l\'utente ha scelto di condividere con te. Usale solo quando servono e non inventare ciò che non è scritto qui:\n'+c:'')}
 // ---- saluto, sidebar ----
-function greet(){const h=new Date().getHours(),m=H.me;
- $('#hi').textContent=(h<5?'Buonanotte':h<12?'Buongiorno':h<18?'Buon pomeriggio':'Buonasera')+(m.first?', '+m.first:'')+'.';
+function greet(){const m=H.me;
+ $('#hi').textContent=greeting();
  $('#mn').textContent=(m.first+' '+m.last).trim()||'Racconta chi sei';
  $('#av').textContent=((m.first[0]||'')+(m.last[0]||'')).toUpperCase()||'?';
  const a=active();$('#nb').textContent=a.length||'';
- $('#tags').innerHTML=a.map(([k,n])=>`<button data-go="${k}">${n}</button>`).join('')}
+ $('#tags').innerHTML=a.map(([k,n])=>`<button data-go="${k}">${n}</button>`).join('');renderIns()}
 $('#tags').onclick=e=>{const b=e.target.closest('[data-go]');if(b)hub(b.dataset.go)};
 function rel(t){const m=(Date.now()-t)/6e4;if(m<1)return'adesso';if(m<60)return Math.round(m)+' min fa';const h=m/60;if(h<24)return Math.round(h)+' h fa';const d=Math.round(h/24);return d===1?'ieri':d+' giorni fa'}
 function renderSide(){const l=[...chats].sort((a,b)=>b.u-a.u);
@@ -273,27 +292,84 @@ $('#menu').onclick=()=>{$('#side').classList.add('open');$('#scrim').classList.a
 $('#scrim').onclick=closeSide;
 $('#new').onclick=()=>{if(busy)return;cur=null;renderChat();renderSide();closeSide();$('#t').focus()};
 // ---- chat ----
-function addMsg(role,text,think){const r=document.createElement('div');
+const fmtL=d=>new Date(d).toLocaleString('it-IT',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+function actsHTML(m){return(m.acts||[]).map((a,i)=>{const d=a.d,ev=a.k==='event';
+ const btn=a.s==='p'?`<button class="btn sm primary" data-op="add">${ev?'Aggiungi al calendario':'Salva nota'}</button>${ev?'<button class="btn sm" data-op="ics">File .ics</button>':''}<button class="btn sm" data-op="skip">Scarta</button>`:a.s==='d'?`<span class="pill2 ok">${ev?'Aggiunto':'Salvata'}</span>${ev?'<button class="btn sm" data-op="ics">File .ics</button>':''}`:'<span class="pill2">Scartato</span>';
+ return `<div class="act" data-m="${m.id}" data-n="${i}"><div class="ah"><span class="tile">${ic(ev?'cal':'note')}</span><div class="tx"><b>${esc(d.title)}</b><small>${ev?esc(fmtL(d.start))+(d.loc?', '+esc(d.loc):''):esc(d.text).replace(/\n/g,'<br>')}</small></div></div><div class="ab">${btn}</div></div>`}).join('')}
+const icsOf=e=>{const f=d=>new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),s=new Date(e.start);
+ return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Will AI//IT','BEGIN:VEVENT','UID:'+uid()+'@willai','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(s),'DTEND:'+f(+s+36e5),'SUMMARY:'+e.title,e.loc?'LOCATION:'+e.loc:'','END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n')};
+async function saveFile(file){if(navigator.canShare?.({files:[file]})){try{await navigator.share({files:[file]});return}catch(e){if(e.name==='AbortError')return}}
+ const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),6e4)}
+function addMsg(role,text,think,m){const r=document.createElement('div');
  if(role==='user'){r.className='row user';r.innerHTML='<div class="u"></div>';r.firstChild.textContent=text}
- else{r.className='row ai';r.innerHTML='<div class="orb'+(think?' think':'')+'"><i></i></div><div class="body"></div>';r.querySelector('.body').innerHTML=text?md(text):''}
+ else{r.className='row ai';r.innerHTML='<div class="orb'+(think?' think':'')+'"><i></i></div><div class="wrap"><div class="body"></div><div class="ax"></div></div>';r.querySelector('.body').innerHTML=text?md(text):'';if(m?.acts)r.querySelector('.ax').innerHTML=actsHTML(m)}
  $('#msgs').appendChild(r);follow(true);return r}
 function follow(f){const s=$('#scroll');if(f||s.scrollHeight-s.scrollTop-s.clientHeight<140)s.scrollTo({top:s.scrollHeight})}
 function renderChat(){const c=chats.find(x=>x.id===cur);$('#msgs').innerHTML='';
  $('#hero').hidden=!!(c&&c.m.length);$('#title').textContent=c?c.t:'';
- c?.m.forEach(m=>addMsg(m.role,m.content));greet();hero()}
-const SUGG=[['Calendario','Cosa ho in programma questa settimana?'],['Organizzazione','Aiutami a pianificare la giornata di domani'],['Imparare','Spiegami come funziona un buco nero, in semplice'],['Scrittura','Scrivimi un messaggio gentile per rimandare un appuntamento']];
-$('#sugg').innerHTML=SUGG.map(([a,b])=>`<button data-q="${b}"><small>${a}</small>${b}</button>`).join('');
+ c?.m.forEach(m=>addMsg(m.role,m.content,false,m));if(!c)pickGreeting();greet();hero();renderSugg(!c)}
+const GREET={
+ m:[['Buongiorno, {n}','Buongiorno.'],['Ben svegliato, {n}','Ben svegliato.'],['Una nuova giornata, {n}','Una nuova giornata.'],['Ehi {n}, pronto a partire?','Pronto a partire?'],['Buongiorno {n}, che si fa oggi?','Che si fa oggi?'],['Colazione fatta, {n}?','Colazione fatta?']],
+ p:[['Buon pomeriggio, {n}','Buon pomeriggio.'],['Ciao {n}, come procede?','Come procede?'],['Eccoti, {n}','Eccoti.'],['Pausa o slancio, {n}?','Pausa o slancio?'],['Ehi {n}, serve una mano?','Serve una mano?']],
+ s:[['Buonasera, {n}','Buonasera.'],['Com\'è andata oggi, {n}?','Com\'è andata oggi?'],['Ciao {n}, serata tranquilla?','Serata tranquilla?'],['Bentornato, {n}','Bentornato.'],['Ehi {n}, pensiamo a domani?','Pensiamo a domani?']],
+ n:[['Ancora in piedi, {n}?','Ancora in piedi?'],['Buonanotte, {n}','Buonanotte.'],['Ehi {n}, la mente non si ferma?','La mente non si ferma?'],['Notte fonda, {n}','Notte fonda.']]};
+let GR=null;
+function pickGreeting(){const h=new Date().getHours(),l=GREET[h<5?'n':h<12?'m':h<18?'p':h<23?'s':'n'];let x;do{x=l[Math.floor(Math.random()*l.length)]}while(x===GR&&l.length>1);GR=x}
+function greeting(){if(!GR)pickGreeting();return H.me.first?GR[0].replace('{n}',H.me.first):GR[1]}
+const POOL=[['Calendario','Cosa ho in programma questa settimana?',1],['Calendario','Trovami un momento libero per studiare',1],['Calendario','Qual è il giorno più pieno dei prossimi?',1],['Calendario','Riassumi i miei prossimi impegni',1],
+ ['Organizzazione','Aiutami a pianificare la giornata di domani'],['Organizzazione','Fammi una routine serale di 20 minuti'],['Organizzazione','Come organizzo lo studio per una verifica?'],['Organizzazione','Prepara la lista per un weekend fuori'],
+ ['Imparare','Spiegami come funziona un buco nero, in semplice'],['Imparare','Cos\'è l\'allineamento dell\'AI?'],['Imparare','Come funziona una rete neurale?'],['Imparare','Perché il cielo è blu?'],['Imparare','Stoicismo ed epicureismo: che differenza c\'è?'],
+ ['Scrittura','Scrivimi un messaggio gentile per rimandare un appuntamento'],['Scrittura','Aiutami a rispondere a una mail in modo educato'],['Scrittura','Scrivi la descrizione del mio profilo GitHub'],['Scrittura','Dammi 5 nomi per un nuovo progetto'],
+ ['Creatività','Inventa un gioco da fare con gli amici in 10 minuti'],['Creatività','Dammi un\'idea di web app da fare in un weekend'],['Creatività','Raccontami una storia breve con un colpo di scena'],['Creatività','Proponi una cena veloce con pochi ingredienti'],
+ ['Mettiti alla prova','Fammi un quiz di 5 domande di storia'],['Mettiti alla prova','Allenami per un colloquio'],['Mettiti alla prova','Dammi un dilemma etico da discutere'],['Mettiti alla prova','Sfidami con un indovinello'],
+ ['Azioni','Aggiungimi la spesa a domani alle 18'],['Azioni','Ricordami di chiamare il dentista giovedì alle 10'],['Azioni','Crea una nota con le cose da portare in gita']];
+let sg=[];
+function renderSugg(shuf){if(shuf||!sg.length){const cal=H.on.cal&&DATA.cal(),sm=H.on.smart!==false&&ready&&tier()>=2,seen=new Set();sg=[];
+  for(const x of POOL.filter(x=>(x[2]?cal:true)&&(x[0]!=='Azioni'||sm)).sort(()=>Math.random()-.5)){if(!seen.has(x[0])){seen.add(x[0]);sg.push(x)}if(sg.length===4)break}}
+ $('#sugg').innerHTML=sg.map(([a,b])=>`<button data-q="${esc(b)}"><small>${a}</small>${esc(b)}</button>`).join('')}
 $('#sugg').onclick=e=>{const b=e.target.closest('[data-q]');if(b)send(b.dataset.q)};
-function hero(){$('#start').hidden=ready||loading;$('#horb').classList.toggle('think',loading)}
+$('#more').onclick=()=>renderSugg(true);
+// ---- insight proattivi ----
+let tips=db.get('tips',{l:[]}).l||[],curIns=[],bg=Promise.resolve();
+const bgq=fn=>{bg=bg.then(fn).catch(()=>{})};
+const smartOk=f=>H.on.smart!==false&&ready&&tier()>=f;
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+function insights(){const out=[],now=new Date(),sod=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()),dd=d=>Math.round((sod(d)-sod(now))/864e5);
+ const lab=d=>{const k=dd(d);return k===0?'oggi':k===1?'domani':d.toLocaleDateString('it-IT',{weekday:'long'})};
+ const hm=d=>d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+ if(H.on.con&&DATA.con()){const b=[];for(const c of H.con.list){const m=(c.b||'').replace(/\D/g,'').slice(-4);if(m.length<4)continue;
+  const d=new Date(now.getFullYear(),+m.slice(0,2)-1,+m.slice(2));if(sod(d)<sod(now))d.setFullYear(d.getFullYear()+1);const k=dd(d);if(k<=14)b.push({k,c})}
+  b.sort((x,y)=>x.k-y.k);if(b[0]){const{k,c}=b[0];out.push({t:k===0?'Oggi è il compleanno di '+c.n:'Il compleanno di '+c.n+(k===1?' è domani':' è tra '+k+' giorni'),p:(k===0?'Oggi':'Presto')+' è il compleanno di '+c.n+'. Aiutami con un messaggio di auguri e un\'idea regalo.',i:'spark'})}}
+ const ev=(H.on.cal?H.cal.feeds.flatMap(f=>f.ev):[]).map(e=>({...e,d:new Date(e.start)})).filter(e=>e.d>now&&dd(e.d)<=7).sort((a,b)=>a.d-b.d);
+ for(let i=1;i<ev.length;i++)if(ev[i].d-ev[i-1].d<45*6e4){out.push({t:'«'+ev[i-1].title+'» e «'+ev[i].title+'» sono quasi alla stessa ora',p:'Ho «'+ev[i-1].title+'» e «'+ev[i].title+'» quasi alla stessa ora, '+lab(ev[i].d)+'. Come li gestisco?',i:'clock'});break}
+ if(ev[0])out.push({t:cap(lab(ev[0].d))+' alle '+hm(ev[0].d)+': '+ev[0].title,p:'Ho «'+ev[0].title+'» '+lab(ev[0].d)+' alle '+hm(ev[0].d)+'. Cosa devo preparare o ricordarmi?',i:'clock'});
+ const cnt={};ev.forEach(e=>{const k=dd(e.d);cnt[k]=(cnt[k]||0)+1});const bz=Object.entries(cnt).find(([,n])=>n>=3);
+ if(bz){const d=ev.find(e=>dd(e.d)==bz[0]).d;out.push({t:cap(lab(d))+' è piena: '+bz[1]+' impegni',p:'Ho '+bz[1]+' impegni '+lab(d)+'. Aiutami a organizzare la giornata.',i:'clock'})}
+ const wd=now.getDay(),h=now.getHours();
+ if(wd===0&&h>=16)out.push({t:'Domenica sera: pianifichiamo la settimana?',p:'Aiutami a pianificare la settimana che inizia domani.',i:'clock'});
+ else if(wd===5&&h>=15)out.push({t:'Venerdì: cosa fai nel weekend?',p:'Dammi qualche idea per il weekend.',i:'clock'});
+ else if(h>=21)out.push({t:'Prepariamo la giornata di domani?',p:'Aiutami a preparare la giornata di domani.',i:'clock'});
+ if(!DATA.cal())out.push({t:'Collega un calendario e Will ti avviserà degli impegni',go:'cal',i:'cal'});
+ if(ready&&tier()<2&&H.on.smart!==false)out.push({t:'Sblocca i consigli intelligenti con un modello Smart o Pro',go:'smart',i:'spark'});
+ return out}
+function renderIns(){const el=$('#ins');if(!el)return;
+ curIns=[...(H.on.smart!==false?tips.slice(0,2).map(t=>({t,p:'Aiutami con questo: '+t,i:'spark'})):[]),...insights()].slice(0,3);
+ el.innerHTML=curIns.length?'<div class="sec">Per te</div>'+curIns.map((x,i)=>`<button class="ins" data-n="${i}"><span class="tile">${ic(x.i)}</span><span class="t">${esc(x.t)}</span></button>`).join(''):''}
+$('#ins').onclick=e=>{const b=e.target.closest('[data-n]');if(!b)return;const x=curIns[b.dataset.n];x.go?hub(x.go):send(x.p)};
+async function genTips(){if(!smartOk(2)||!ctx())return;const key=new Date().toDateString()+ctx().length+modelId;const t=db.get('tips',null);
+ if(t&&t.k===key){tips=t.l;return renderIns()}
+ const r=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},{role:'user',content:'Scrivi 3 consigli proattivi brevi (massimo 14 parole ciascuno, in seconda persona) basati sui miei impegni e sulle informazioni che conosci: cosa devo ricordare, preparare o evitare. Rispondi SOLO con JSON: {"tips":["...","...","..."]}'}],response_format:{type:'json_object'},temperature:.4,max_tokens:220});
+ tips=(JSON.parse(r.choices[0].message.content).tips||[]).filter(x=>typeof x==='string'&&x.length<140).slice(0,3);db.set('tips',{k:key,l:tips});renderIns()}
+function hero(){$('#start').hidden=ready||loading;$('#horb').classList.toggle('think',loading);renderIns()}
 // ---- modello ----
-$('#mods').innerHTML=MODELS.map(m=>`<label class="mod"><input type="radio" name="m" value="${m.id}"><span><b>${m.n}</b><small>${m.d}</small></span><em>${m.s}</em></label>`).join('');
+$('#mods').innerHTML=MODELS.map(m=>`<label class="mod"><input type="radio" name="m" value="${m.id}"><span><b>${m.n}</b> <span class="pill2">${TL[m.t]}</span><small>${m.d}</small></span><em>${m.s}</em></label>`).join('');
 function pill(){const p=$('#pill');p.className='chip'+(ready?' ready':loading?' load':'');
  $('#pt').textContent=ready?MODELS.find(m=>m.id===modelId)?.short:loading?'Carico '+pct+'%':'Scegli modello';
  $('#t').placeholder=ready?'Scrivi un messaggio':'Avvia un modello per iniziare';
  $('#ld').disabled=loading;$('#ld').textContent=loading?'Download in corso…':'Scarica e avvia';hero();ui()}
 function openModel(){$$('#mods input').forEach(i=>i.checked=i.value===modelId);
  if(!navigator.gpu)$('#gpu').textContent='Questo browser non supporta WebGPU. Serve Safari 26 o un Chrome recente.';
- $('#dm').showModal()}
+ $('#dm').showModal();W().then(w=>{const ok=new Set(w.prebuiltAppConfig.model_list.map(m=>m.model_id));$$('#mods .mod').forEach(l=>l.hidden=!ok.has(l.querySelector('input').value))}).catch(()=>{})}
 $('#pill').onclick=openModel;$('#start').onclick=openModel;
 $('#havef').onclick=()=>{$('#dm').close();hub('store')};
 $('#ld').onclick=()=>load($('#mods input:checked').value);
@@ -304,7 +380,7 @@ async function load(id){
  const cb=p=>{pct=Math.round(p.progress*100);$('#pb').style.width=pct+'%';$('#pt2').textContent=p.text;pill()};
  try{const w=await W();
   if(engine){engine.setInitProgressCallback(cb);await engine.reload(id)}else engine=await w.CreateMLCEngine(id,{initProgressCallback:cb});
-  ready=true;db.set('model',id);toast('Modello pronto');$('#dm').close();navigator.storage?.persist?.()
+  ready=true;db.set('model',id);toast('Modello pronto');$('#dm').close();navigator.storage?.persist?.();bgq(genTips)
  }catch(e){$('#pt2').textContent='Errore: '+(e.message||e)+'. Riprova o scegli un modello più leggero.'}
  loading=false;pill();if(V==='store'&&$('#dh').open)hub('store')}
 // ---- parser ----
@@ -320,15 +396,18 @@ function parseVCF(t){return t.replace(/\r?\n[ \t]/g,'').split(/BEGIN:VCARD/i).sl
  return n?{n,tel:g('TEL'),mail:g('EMAIL'),b:g('BDAY'),o:g('ORG')?.replace(/;/g,' ').trim()}:null}).filter(Boolean)}
 // ---- hub ----
 let V='home',tab='g';
-const TITLES={home:'Il tuo contesto',me:'Su di me',cal:'Calendario',con:'Contatti',doc:'Documenti',note:'Note libere',preview:'Cosa vede l\'AI',store:'Archivio e modello'};
+const TITLES={home:'Il tuo contesto',me:'Su di me',cal:'Calendario',con:'Contatti',doc:'Documenti',note:'Note libere',smart:'Funzioni intelligenti',preview:'Cosa vede l\'AI',store:'Archivio e modello'};
 const GUIDE={g:['Apri <b>calendar.google.com</b> dal browser (da iPhone usa la versione desktop del sito).','Tocca l\'ingranaggio, poi <b>Impostazioni</b> e <b>Importa/Esporta</b>.','Premi <b>Esporta</b>: scarica uno zip con un file .ics per ogni calendario.','Decomprimilo (su iPhone basta toccare lo zip nell\'app File) e scegli il file qui sotto.'],
  a:['<b>Su Mac:</b> nell\'app Calendario fai clic destro sul calendario, poi <b>Esporta…</b> e salva il file .ics.','<b>Su iPhone:</b> apri <b>icloud.com/calendar</b>, tocca l\'icona di condivisione accanto al calendario e attiva <b>Calendario pubblico</b>.','Copia il link e incollalo in Safari sostituendo <b>webcal://</b> con <b>https://</b>: si scarica il file .ics.','Scegli il file qui sotto, poi puoi disattivare la condivisione pubblica.'],
  o:['Apri <b>outlook.live.com/calendar</b> e vai in <b>Impostazioni</b>, poi <b>Calendario</b> e <b>Calendari condivisi</b>.','Sotto <b>Pubblica un calendario</b> scegli quale calendario e quanto dettaglio, poi <b>Pubblica</b>.','Copia il link <b>ICS</b> e aprilo nel browser: si scarica il file .ics.','Scegli il file qui sotto.']};
+const FEAT=[['Consigli del giorno','Will legge calendario e note e ti suggerisce cosa preparare.',2],['Azioni','Scrivi "aggiungimi la spesa domani alle 18": Will prepara evento e lista.',2],['Titoli automatici','Dà un nome alle tue chat.',2],['Risposte suggerite','Dopo ogni risposta propone i passi successivi.',3]];
+const nAct=()=>H.on.smart!==false?FEAT.filter(f=>tier()>=f[2]).length:0;
+const smartCard=()=>`<div class="card" data-go="smart"><div class="tile">${ic('spark')}</div><div class="tx"><b>Funzioni intelligenti</b><small>Livello ${TL[tier()]}: ${nAct()} di ${FEAT.length} attive</small></div><label class="sw"><input type="checkbox" data-tog="smart" ${H.on.smart!==false?'checked':''} aria-label="Attiva le funzioni intelligenti"><span></span></label></div>`;
 const PRESET=['Allergie','Orari scuola o lavoro','Obiettivi','Persone importanti','Preferenze'];
 const rmBtn=(a,id)=>`<button class="rm" data-act="${a}" data-id="${id}" aria-label="Rimuovi">${ic('x')}</button>`;
 const R={
  home:()=>`<p>Scegli cosa può leggere l'AI. Ogni informazione resta su questo dispositivo e puoi spegnerla quando vuoi.</p>`+
-  SRC.map(([k,n,i])=>`<div class="card" data-go="${k}"><div class="tile">${ic(i)}</div><div class="tx"><b>${n}</b><small>${SUB[k]()}</small></div><label class="sw"><input type="checkbox" data-tog="${k}" ${H.on[k]?'checked':''} aria-label="Attiva ${n}"><span></span></label></div>`).join('')+
+  SRC.map(([k,n,i])=>`<div class="card" data-go="${k}"><div class="tile">${ic(i)}</div><div class="tx"><b>${n}</b><small>${SUB[k]()}</small></div><label class="sw"><input type="checkbox" data-tog="${k}" ${H.on[k]?'checked':''} aria-label="Attiva ${n}"><span></span></label></div>`).join('')+smartCard()+
   `<div class="card" data-go="preview"><div class="tile">${ic('eye')}</div><div class="tx"><b>Anteprima</b><small>Il testo esatto che l'AI riceve</small></div>${ic('next')}</div>
    <div class="card" data-go="store"><div class="tile">${ic('store')}</div><div class="tx"><b>Archivio e modello</b><small>Spazio, cache, esporta e importa</small></div>${ic('next')}</div>`,
  me:()=>`<div class="two"><label class="f">Nome<input class="in" data-f="first" value="${esc(H.me.first)}" autocomplete="given-name"></label><label class="f">Cognome<input class="in" data-f="last" value="${esc(H.me.last)}" autocomplete="family-name"></label></div>
@@ -358,6 +437,10 @@ const R={
   <div class="tags" style="justify-content:flex-start">${PRESET.map(p=>`<button data-act="addnote" data-id="${p}">${p}</button>`).join('')}</div>`+
   H.notes.map(n=>`<div class="note"><div class="h"><input class="in" data-nf="t" data-id="${n.id}" value="${esc(n.t)}" placeholder="Titolo">${rmBtn('rmnote',n.id)}</div><textarea class="in" data-nf="x" data-id="${n.id}" placeholder="Cosa deve sapere l'AI?">${esc(n.x)}</textarea></div>`).join('')+
   `<div class="acts"><button class="btn primary sm" data-act="addnote" data-id="">Nuova nota</button></div>`,
+ smart:()=>`<p>Will va oltre le risposte: legge il tuo contesto e ti aiuta in anticipo. Le funzioni più avanzate richiedono un modello più potente.</p>`+
+  FEAT.map(f=>`<div class="feed"><div class="tx"><b>${f[0]}</b><small>${f[1]}</small></div><span class="pill2${tier()>=f[2]&&H.on.smart!==false?' ok':''}">${tier()>=f[2]?(H.on.smart!==false?'Attiva':'Spenta'):'Livello '+TL[f[2]]}</span></div>`).join('')+
+  `<div class="feed"><div class="tx"><b>Promemoria</b><small>Compleanni, impegni vicini e sovrapposizioni dal calendario e dai contatti.</small></div><span class="pill2 ok">Sempre attivi</span></div>
+  <p class="hint">Modello scelto: ${MODELS.find(m=>m.id===modelId)?.short}, livello ${TL[tier()]}.</p><div class="acts"><button class="btn primary sm" data-act="models">Scegli un altro modello</button></div>`,
  preview:()=>{const c=ctx();return `<p>Questo è tutto ciò che l'AI riceve oltre ai tuoi messaggi: circa ${Math.ceil(c.length/3.5)} token. I modelli piccoli hanno poca memoria, quindi il testo è limitato a 7000 caratteri.</p><pre class="pv">${esc(c||'Nessuna informazione condivisa.')}</pre>`},
  store:()=>`<p>I modelli stanno nella <b>Cache Storage</b> del browser per questo sito: non sono visibili nell'app File. Se il browser la svuota, puoi rimetterli da un file esportato.</p>
   <div id="sinfo" class="list"><p class="hint">Calcolo…</p></div>
@@ -392,7 +475,8 @@ $('#hv').addEventListener('click',async e=>{
  if(a==='exp')return exportModel(id);
  if(a==='del'){if(confirm('Eliminare questo modello dalla cache del browser?')){await(await W()).deleteModelAllInfoInCache(id);if(id===modelId&&ready){await engine.unload();ready=false;pill()}return storeFill()}}
  if(a==='free'){await engine.unload();ready=false;pill();toast('Memoria RAM liberata');return storeFill()}
- if(a==='use'){$('#dh').close();load(id)}});
+ if(a==='use'){$('#dh').close();load(id)}
+ if(a==='models'){$('#dh').close();openModel()}});
 $('#hv').addEventListener('change',e=>{const t=e.target;
  if(t.dataset.tog){H.on[t.dataset.tog]=t.checked;saveH();greet()}
  if('det' in t.dataset){H.con.det=t.checked;saveH()}});
@@ -419,9 +503,8 @@ async function exportModel(id){
   if(!ent.length)return toast('Questo modello non è in cache');
   toast('Preparo il file, può richiedere un po\'…');
   const te=new TextEncoder(),head=te.encode(JSON.stringify({v:1,id,entries:ent})),len=new Uint8Array(4);new DataView(len.buffer).setUint32(0,head.length,true);
-  const file=new File([te.encode('LAIMODL1'),len,head,...parts],'localai-'+id+'.lai',{type:'application/octet-stream'});
-  if(navigator.canShare?.({files:[file]})){try{await navigator.share({files:[file]});return}catch(e){if(e.name==='AbortError')return}}
-  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),6e4);
+  const file=new File([te.encode('LAIMODL1'),len,head,...parts],'willai-'+id+'.lai',{type:'application/octet-stream'});
+  await saveFile(file);
  }catch(e){toast('Esportazione non riuscita: '+(e.message||e))}}
 async function importModel(f){
  try{if(await f.slice(0,8).text()!=='LAIMODL1')return toast('File non valido');
@@ -434,23 +517,56 @@ async function importModel(f){
  }catch(e){toast('Importazione non riuscita: '+(e.message||e))}}
 // ---- invio ----
 function ui(){const g=$('#go');g.innerHTML=ic(busy?'stop':'send');g.disabled=!busy&&ready&&!$('#t').value.trim();g.setAttribute('aria-label',busy?'Interrompi':'Invia')}
+const INTENT=/(aggiung|mett|segn|inserisc|crea|prepar|ricord)\w*[\s\S]*(calendario|agenda|evento|nota|lista|spesa|appuntament)|promemoria|ricordam|ricordat/i;
+async function extract(text){const now=new Date(),wk=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],p=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
+ const days=Array.from({length:8},(_,i)=>{const d=new Date(+now+i*864e5);return wk[d.getDay()]+' '+iso(d)+(i===0?' (oggi)':i===1?' (domani)':'')}).join(', ');
+ const sys='Oggi è '+wk[now.getDay()]+' '+iso(now)+', ore '+p(now.getHours())+':'+p(now.getMinutes())+'. Prossimi giorni: '+days+'.\nSe il messaggio chiede di aggiungere un impegno o promemoria al calendario, o di creare una nota o una lista, rispondi SOLO con JSON: {"actions":[...]} dove ogni azione è {"type":"event","title":"...","start":"AAAA-MM-GGTHH:MM","loc":""} oppure {"type":"note","title":"...","text":"- voce\\n- voce"}. Se l\'impegno richiede preparazione (spesa, viaggio, festa, esame) aggiungi anche una nota con una lista pratica e realistica. Massimo 2 azioni. Se non c\'è nulla da aggiungere rispondi {"actions":[]}. Se l\'ora non è indicata usa le 09:00.';
+ const r=await engine.chat.completions.create({messages:[{role:'system',content:sys},{role:'user',content:text}],response_format:{type:'json_object'},temperature:0,max_tokens:350});
+ return(JSON.parse(r.choices[0].message.content).actions||[]).slice(0,2).map(a=>{
+  if(a.type==='event'&&a.title&&!isNaN(new Date(a.start)))return{k:'event',s:'p',d:{title:String(a.title).slice(0,80),start:new Date(a.start).toISOString(),loc:String(a.loc||'').slice(0,80)}};
+  const tx=Array.isArray(a.text)?a.text.map(x=>'- '+x).join('\n'):String(a.text||'');
+  return a.type==='note'&&tx?{k:'note',s:'p',d:{title:String(a.title||'Nota').slice(0,60),text:tx.slice(0,800)}}:null}).filter(Boolean)}
+async function title(c){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Scrivi un titolo di massimo 4 parole per questa conversazione, in italiano, senza virgolette né punteggiatura finale. Rispondi solo con il titolo.'},{role:'user',content:c.m.map(m=>m.role+': '+m.content.slice(0,200)).join('\n')}],temperature:.3,max_tokens:14});
+ const t=r.choices[0].message.content.trim().replace(/^["«']|["»'.]$/g,'');if(t&&t.length<50){c.t=t;save();renderSide();if(cur===c.id)$('#title').textContent=t}}
+async function followups(row,q,a){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Dato questo scambio, proponi 3 possibili prossime richieste dell\'utente, brevi (massimo 8 parole), in prima persona. Rispondi SOLO con JSON {"next":["...","...","..."]}'},{role:'user',content:'Utente: '+q+'\nAssistente: '+a.slice(0,600)}],response_format:{type:'json_object'},temperature:.5,max_tokens:120});
+ const l=(JSON.parse(r.choices[0].message.content).next||[]).filter(x=>typeof x==='string').slice(0,3);
+ if(!l.length||!row.isConnected)return;const d=document.createElement('div');d.className='fu tags';d.innerHTML=l.map(x=>`<button data-q="${esc(x)}">${esc(x)}</button>`).join('');row.querySelector('.wrap').appendChild(d);follow()}
 async function send(text){
  text=text.trim();if(!text||busy)return;
  if(!ready){openModel();return}
+ busy=true;ui();await bg;
  let c=chats.find(x=>x.id===cur);
  if(!c){c={id:uid(),t:text.length>44?text.slice(0,44)+'…':text,m:[],u:Date.now()};chats.unshift(c);cur=c.id;$('#title').textContent=c.t}
- c.m.push({role:'user',content:text});$('#hero').hidden=true;addMsg('user',text);
- $('#t').value='';$('#t').style.height='';busy=true;ui();renderSide();
+ c.m.push({role:'user',content:text});$('#hero').hidden=true;$$('.fu').forEach(x=>x.remove());addMsg('user',text);
+ $('#t').value='';$('#t').style.height='';renderSide();
  const row=addMsg('ai','',true),body=row.querySelector('.body');body.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';
+ let acts=[];
+ if(smartOk(2)&&INTENT.test(text)){try{acts=await extract(text)}catch{}}
+ const hint=acts.length?'\n\nHai già preparato per l\'utente: '+acts.map(a=>a.k==='event'?'un evento "'+a.d.title+'" per '+fmtL(a.d.start):'una nota "'+a.d.title+'"').join('; ')+'. Conferma in una o due frasi cosa hai preparato e invita a premere il pulsante sotto per confermare. Non ripetere la lista.':'';
  let acc='';
- try{const st=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},...c.m.slice(-12)],stream:true,temperature:.7,max_tokens:700});
+ try{const st=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()+hint},...c.m.slice(-12).map(({role,content})=>({role,content}))],stream:true,temperature:.7,max_tokens:700});
   for await(const ch of st){acc+=ch.choices[0]?.delta?.content||'';body.innerHTML=md(acc);follow()}
  }catch(e){acc=acc||'Qualcosa è andato storto: '+(e.message||e)}
  acc=acc||'(risposta vuota)';body.innerHTML=md(acc);row.querySelector('.orb').classList.remove('think');
- c.m.push({role:'assistant',content:acc});c.u=Date.now();save();busy=false;ui();renderSide()}
+ const msg={role:'assistant',content:acc,id:uid()};if(acts.length)msg.acts=acts;
+ c.m.push(msg);c.u=Date.now();save();row.querySelector('.ax').innerHTML=actsHTML(msg);follow();
+ busy=false;ui();renderSide();
+ if(smartOk(2)&&c.m.length===2)bgq(()=>title(c));
+ if(smartOk(3))bgq(()=>followups(row,text,acc))}
 $('#f').onsubmit=e=>{e.preventDefault();if(busy)engine.interruptGenerate();else send($('#t').value)};
 $('#t').oninput=e=>{e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,140)+'px';ui()};
 $('#t').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!touch){e.preventDefault();$('#f').requestSubmit()}};
+$('#msgs').addEventListener('click',e=>{
+ const q=e.target.closest('[data-q]');if(q)return send(q.dataset.q);
+ const o=e.target.closest('[data-op]');if(!o)return;
+ const box=o.closest('.act'),c=chats.find(x=>x.id===cur),m=c?.m.find(x=>x.id===box.dataset.m),a=m?.acts[+box.dataset.n];if(!a)return;
+ if(o.dataset.op==='ics')return saveFile(new File([icsOf(a.d)],'evento.ics',{type:'text/calendar'}));
+ if(o.dataset.op==='skip')a.s='x';
+ if(o.dataset.op==='add'){
+  if(a.k==='event'){let f=H.cal.feeds.find(x=>x.id==='will');if(!f){f={id:'will',n:'Aggiunti da Will AI',ev:[]};H.cal.feeds.push(f)}f.ev.push({title:a.d.title,start:a.d.start,loc:a.d.loc})}
+  else H.notes.push({id:uid(),t:a.d.title,x:a.d.text});
+  a.s='d';saveH();toast(a.k==='event'?'Aggiunto al calendario di Will AI. Usa File .ics per quello del telefono':'Nota salvata');greet()}
+ save();box.parentElement.innerHTML=actsHTML(m)});
 $$('[data-close]').forEach(b=>b.onclick=()=>{b.closest('dialog').close();greet()});
 $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){d.close();greet()}}));
 greet();renderSide();renderChat();pill();
