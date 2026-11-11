@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0e0e16">
+<meta name="theme-color" content="#f7f6fc" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0e16" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Will AI">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon.svg">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500..700&display=swap" rel="stylesheet">
@@ -24,7 +26,7 @@ button,textarea,input,select{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0}
 svg{width:20px;height:20px;flex:none}
 :focus-visible{outline:2px solid var(--a);outline-offset:2px}
-.app{display:flex;height:100dvh}
+.app{display:flex;position:fixed;top:0;left:0;right:0;height:var(--vh,100dvh)}
 .orb{--s:40px;width:var(--s);height:var(--s);position:relative;flex:none;border-radius:50%;overflow:hidden;isolation:isolate;animation:breathe 6s ease-in-out infinite}
 .orb i{position:absolute;inset:-14%;border-radius:50%;background:conic-gradient(from 0deg,var(--a),var(--b),var(--c),var(--a));filter:blur(calc(var(--s)*.14));animation:spin 14s linear infinite}
 .orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.5),transparent 55%)}
@@ -89,11 +91,12 @@ textarea{background:none;border:0;outline:0;resize:none}
 .send{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--text);color:var(--bg);transition:transform .15s,opacity .2s}
 .send:disabled{opacity:.3}.send:active{transform:scale(.92)}
 .fine{text-align:center;color:var(--dim);font-size:12px;margin:8px 0 0}
-dialog{border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:28px;padding:0;width:min(600px,calc(100vw - 20px));max-height:calc(100dvh - 24px)}
-dialog::backdrop{background:rgba(8,6,20,.62);backdrop-filter:blur(6px)}
+dialog{position:fixed;inset:auto;left:0;right:0;margin:0 auto;top:calc(env(safe-area-inset-top) + 16px);border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:28px;padding:0;width:min(600px,calc(100vw - 20px));max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px)}
+dialog::backdrop{background:transparent}
+body:has(dialog[open])::after{content:"";position:fixed;top:0;left:0;right:0;height:var(--vh,100dvh);background:rgba(8,6,20,.62);backdrop-filter:blur(6px);z-index:40}
 dialog[open]{animation:pop .25s cubic-bezier(.2,.9,.3,1.1)}
 @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}}
-.dlg{padding:22px 24px 26px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(100dvh - 26px)}
+.dlg{padding:22px 24px 26px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 34px)}
 .top{display:flex;align-items:center;gap:6px;margin:0 -8px}
 .top h2{flex:1;margin:0;font:600 25px var(--serif);letter-spacing:-.02em;padding-left:6px}
 .top button{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;color:var(--dim)}.top button:hover{background:var(--bg3)}.top button[hidden]{display:none}
@@ -140,7 +143,7 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .link{color:var(--dim);font-size:14px;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}.link:hover{color:var(--text)}
 .hint{font-size:13.5px!important}
-#toast{position:fixed;left:50%;bottom:calc(110px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}
+#toast{position:fixed;left:50%;top:calc(var(--vh,100dvh) - 130px - env(safe-area-inset-bottom));transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 .wrap{flex:1;min-width:0}
 .act{border:1px solid var(--line);background:var(--bg2);border-radius:16px;padding:12px;display:flex;flex-direction:column;gap:10px;margin-top:10px}
@@ -152,9 +155,9 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 .ins{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--bg2);text-align:left;transition:border-color .2s}
 .ins:hover{border-color:var(--a)}.ins .tile{width:34px;height:34px;border-radius:11px}.ins .tile svg{width:18px;height:18px}.ins .t{flex:1;font-size:14.5px}
 @media (max-width:899px){
- #side{position:fixed;inset:0 auto 0 0;width:min(86vw,330px);transform:translateX(-102%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
+ #side{position:fixed;top:0;left:0;height:var(--vh,100dvh);width:min(86vw,330px);transform:translateX(-102%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
  #side.open{transform:none}
- #scrim.on{display:block;position:fixed;inset:0;background:rgba(8,6,20,.55);z-index:20}
+ #scrim.on{display:block;position:fixed;top:0;left:0;right:0;height:var(--vh,100dvh);background:rgba(8,6,20,.55);z-index:20}
  .ib{display:grid}.chip span.lb{display:none}.two{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -445,7 +448,10 @@ const R={
  store:()=>`<p>I modelli stanno nella <b>Cache Storage</b> del browser per questo sito: non sono visibili nell'app File. Se il browser la svuota, puoi rimetterli da un file esportato.</p>
   <div id="sinfo" class="list"><p class="hint">Calcolo…</p></div>
   <div class="sec">Modelli</div><div id="smods" class="list"></div>
-  <div class="acts"><button class="btn primary sm" data-act="impmod">Importa un file .lai</button><button class="btn sm" data-act="persist">Proteggi dalla cancellazione</button></div>`};
+  <div class="acts"><button class="btn primary sm" data-act="impmod">Importa un file .lai</button><button class="btn sm" data-act="persist">Proteggi dalla cancellazione</button></div>
+  <div class="sec">Backup dei tuoi dati</div><p class="hint">Chat, profilo, calendari e note stanno solo su questo dispositivo. Se reinstalli l'app si perdono: esportali prima.</p>
+  <div class="acts"><button class="btn sm" data-act="expdata">Esporta dati</button><button class="btn sm" data-act="impdata">Importa dati</button></div>
+  <p class="hint" id="diag"></p>`};
 function hub(v='home'){V=v;$('#ht').textContent=TITLES[v];$('#hb').hidden=v==='home';$('#hv').innerHTML=R[v]();
  if(!$('#dh').open)$('#dh').showModal();$('#dh .dlg').scrollTop=0;closeSide();if(v==='store')storeFill()}
 $('#ctx').onclick=()=>hub('home');$('#me').onclick=()=>hub('me');$('#hb').onclick=()=>{greet();hub('home')};
@@ -472,6 +478,8 @@ $('#hv').addEventListener('click',async e=>{
  if(a==='rmnote'){H.notes=H.notes.filter(n=>n.id!==id);saveH();return hub('note')}
  if(a==='impmod')return pick('.lai,application/octet-stream',false,fs=>importModel(fs[0]));
  if(a==='persist'){const ok=await navigator.storage?.persist?.();toast(ok?'Archiviazione protetta':'Il browser non ha concesso la protezione');return storeFill()}
+ if(a==='expdata')return saveFile(new File([JSON.stringify({v:1,hub:H,chats,model:modelId})],'willai-dati.json',{type:'application/json'}));
+ if(a==='impdata')return pick('.json,application/json',false,async fs=>{try{const d=JSON.parse(await fs[0].text());if(!d.hub||!Array.isArray(d.chats))throw 0;H=d.hub;saveH();chats=d.chats;save();cur=null;greet();renderSide();renderChat();toast('Dati importati')}catch{toast('File non valido')}});
  if(a==='exp')return exportModel(id);
  if(a==='del'){if(confirm('Eliminare questo modello dalla cache del browser?')){await(await W()).deleteModelAllInfoInCache(id);if(id===modelId&&ready){await engine.unload();ready=false;pill()}return storeFill()}}
  if(a==='free'){await engine.unload();ready=false;pill();toast('Memoria RAM liberata');return storeFill()}
@@ -485,7 +493,10 @@ $('#hv').addEventListener('input',e=>{const t=e.target;
  if(t.dataset.nf){const n=H.notes.find(x=>x.id===t.dataset.id);if(n){n[t.dataset.nf]=t.value;saveH()}}});
 // ---- archivio modelli ----
 const MB=b=>b>=1e9?(b/1e9).toFixed(1)+' GB':Math.round(b/1e6)+' MB';
-async function storeFill(){
+function diag(){const pr=document.createElement('div');pr.style.cssText='position:fixed;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)';document.body.appendChild(pr);
+ const cs=getComputedStyle(pr),t=cs.paddingTop,b=cs.paddingBottom;pr.remove();
+ const el=$('#diag');if(el)el.textContent='Schermo: finestra '+innerWidth+'×'+innerHeight+', display '+screen.width+'×'+screen.height+', area sicura '+t+' / '+b+', app installata: '+(isStandalone()?'sì':'no')}
+async function storeFill(){diag();
  let est={},per=false;try{est=await navigator.storage.estimate();per=await navigator.storage.persisted()}catch{}
  const w=await W();
  const rows=await Promise.all(MODELS.map(async m=>({m,c:await w.hasModelInCache(m.id).catch(()=>false)})));
@@ -569,6 +580,11 @@ $('#msgs').addEventListener('click',e=>{
  save();box.parentElement.innerHTML=actsHTML(m)});
 $$('[data-close]').forEach(b=>b.onclick=()=>{b.closest('dialog').close();greet()});
 $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){d.close();greet()}}));
+const isStandalone=()=>navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+function fit(){const gap=screen.height-innerHeight,r=document.documentElement.style;
+ if(isStandalone()&&gap>20&&gap<120)r.setProperty('--vh',screen.height+'px');else r.removeProperty('--vh');diag()}
+['resize','orientationchange','pageshow'].forEach(ev=>addEventListener(ev,()=>setTimeout(fit,60)));
+fit();
 greet();renderSide();renderChat();pill();
 if(!db.get('seen',0)){db.set('seen',1);setTimeout(()=>hub('me'),500)}
 else if(db.get('model',null)&&navigator.gpu)load(modelId);
