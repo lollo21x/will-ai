@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500..700&display=swap" rel="stylesheet">
 <title>Will AI</title>
 <style>
-:root{--bg:#0e0e16;--bg2:#15151f;--bg3:#1e1e2b;--line:rgba(255,255,255,.1);--text:#efeefb;--dim:#9795b3;--a:#9b8bff;--b:#4fd1ff;--c:#ffb38a;--ok:#5ee6b0;--bad:#ff7a8a;--serif:"Fraunces",Georgia,serif;--sans:"DM Sans",-apple-system,system-ui,sans-serif}
+:root{--topx:5px;--bg:#0e0e16;--bg2:#15151f;--bg3:#1e1e2b;--line:rgba(255,255,255,.1);--text:#efeefb;--dim:#9795b3;--a:#9b8bff;--b:#4fd1ff;--c:#ffb38a;--ok:#5ee6b0;--bad:#ff7a8a;--serif:"Fraunces",Georgia,serif;--sans:"DM Sans",-apple-system,system-ui,sans-serif}
 @media (prefers-color-scheme:light){:root{--bg:#f7f6fc;--bg2:#fff;--bg3:#eeedf8;--line:rgba(26,23,51,.12);--text:#1a1733;--dim:#68668c;--a:#6a58ff;--ok:#0d9f6e;--bad:#d6334a}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
@@ -33,7 +33,7 @@ svg{width:20px;height:20px;flex:none}
 .orb.think i{animation-duration:2.2s}.orb.think{animation-duration:1.6s}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes breathe{50%{transform:scale(1.06)}}
-#side{width:292px;background:var(--bg2);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top)) 14px calc(14px + env(safe-area-inset-bottom));gap:16px;z-index:30;flex:none}
+#side{width:292px;background:var(--bg2);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:calc(18px + env(safe-area-inset-top) + var(--topx)) 14px calc(14px + env(safe-area-inset-bottom));gap:16px;z-index:30;flex:none}
 .brand{display:flex;align-items:center;gap:10px;font:600 21px var(--serif);letter-spacing:-.01em;padding:2px 6px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:14px;background:var(--bg3);font-weight:500;border:1px solid var(--line);transition:transform .15s,background .2s}
 .btn:active{transform:scale(.97)}
@@ -52,7 +52,7 @@ svg{width:20px;height:20px;flex:none}
 #mn{font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #scrim{display:none}
 main{flex:1;min-width:0;display:flex;flex-direction:column}
-header{display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px}
+header{display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top) + var(--topx)) 14px 10px}
 #title{flex:1;min-width:0;font-weight:500;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 6px}
 .ib{width:42px;height:42px;display:none;place-items:center;border-radius:12px}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);font-size:14px;font-weight:500;white-space:nowrap}
@@ -91,12 +91,12 @@ textarea{background:none;border:0;outline:0;resize:none}
 .send{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--text);color:var(--bg);transition:transform .15s,opacity .2s}
 .send:disabled{opacity:.3}.send:active{transform:scale(.92)}
 .fine{text-align:center;color:var(--dim);font-size:12px;margin:8px 0 0}
-dialog{position:fixed;inset:auto;left:0;right:0;margin:0 auto;top:calc(env(safe-area-inset-top) + 16px);border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:28px;padding:0;width:min(600px,calc(100vw - 20px));max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 32px)}
+dialog{position:fixed;inset:auto;left:0;right:0;margin:0 auto;top:calc(env(safe-area-inset-top) + var(--topx) + 16px);border:1px solid var(--line);background:var(--bg2);color:var(--text);border-radius:28px;padding:0;width:min(600px,calc(100vw - 20px));max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - var(--topx) - env(safe-area-inset-bottom) - 32px)}
 dialog::backdrop{background:transparent}
 body:has(dialog[open])::after{content:"";position:fixed;top:0;left:0;right:0;height:var(--vh,100dvh);background:rgba(8,6,20,.62);backdrop-filter:blur(6px);z-index:40}
 dialog[open]{animation:pop .25s cubic-bezier(.2,.9,.3,1.1)}
 @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}}
-.dlg{padding:22px 24px 26px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 34px)}
+.dlg{padding:22px 24px 26px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:calc(var(--vh,100dvh) - env(safe-area-inset-top) - var(--topx) - env(safe-area-inset-bottom) - 34px)}
 .top{display:flex;align-items:center;gap:6px;margin:0 -8px}
 .top h2{flex:1;margin:0;font:600 25px var(--serif);letter-spacing:-.02em;padding-left:6px}
 .top button{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;color:var(--dim)}.top button:hover{background:var(--bg3)}.top button[hidden]{display:none}
@@ -119,8 +119,18 @@ label.f{display:flex;flex-direction:column;gap:6px;font-size:13.5px;color:var(--
 .mod{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;border:1px solid var(--line);cursor:pointer}
 .mod:has(input:checked){border-color:var(--a);background:var(--bg3)}
 .mod input{accent-color:var(--a);width:18px;height:18px}
-.mod b{display:block;font-weight:600}.mod small{color:var(--dim);font-size:13px}
-.mod em{margin-left:auto;font-style:normal;font-size:13px;color:var(--dim);white-space:nowrap}
+.mod .mx{flex:1;min-width:0}.mod b{font-weight:600}.mod small{display:block;color:var(--dim);font-size:13px;margin-top:2px}.mod small.sz{font-size:12.5px;margin-top:1px}
+.grp{font:600 12.5px var(--sans);color:var(--dim);margin:10px 2px -2px;text-transform:uppercase;letter-spacing:.05em}
+.ramp{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--bg)}.ramp .tx{flex:1;min-width:0;font-size:14.5px}.ramp small{display:block;color:var(--dim);font-size:12.5px}
+.stp{display:flex;flex-direction:column;gap:5px}.stp .h{display:flex;justify-content:space-between;font-size:13.5px}.stp .h span:last-child{color:var(--dim)}
+.bar.ind i{width:40%!important;animation:slide 1.2s ease-in-out infinite}@keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+.pill2.on{color:var(--a);border-color:var(--a)}.pill2.warn{color:var(--c);border-color:var(--c)}
+.chip.dl .dot{background:var(--b);animation:breathe 1s infinite}.chip.load .dot{background:var(--a)}
+.tip{margin-top:10px;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg2);font-size:14.5px}.tip b{color:var(--a)}
+.src{margin-top:8px;font-size:12.5px;color:var(--dim)}.src a{color:var(--dim);text-underline-offset:3px}
+.chk2{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:14px;border:1px solid var(--line)}.chk2 input{accent-color:var(--a);width:20px;height:20px}.chk2 .tx{flex:1;min-width:0}.chk2.done b{text-decoration:line-through;color:var(--dim)}.chk2 b{display:block;font-weight:500}.chk2 small{color:var(--dim);font-size:12.5px}
+.wxd{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}.wxd div{padding:10px 12px;border-radius:14px;border:1px solid var(--line);font-size:13.5px}.wxd b{display:block;font-weight:600}
+.fr0{display:flex;gap:8px}.fr0 .in{flex:1}
 .mods{display:flex;flex-direction:column;gap:8px}
 #pr{display:none;flex-direction:column;gap:8px}#pr.on{display:flex}
 .bar{height:6px;border-radius:6px;background:var(--bg3);overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--a);transition:width .25s}
@@ -158,7 +168,7 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
  #side{position:fixed;top:0;left:0;height:var(--vh,100dvh);width:min(86vw,330px);transform:translateX(-102%);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
  #side.open{transform:none}
  #scrim.on{display:block;position:fixed;top:0;left:0;right:0;height:var(--vh,100dvh);background:rgba(8,6,20,.55);z-index:20}
- .ib{display:grid}.chip span.lb{display:none}.two{grid-template-columns:1fr}
+ .ib{display:grid}.chip span.lb{display:none}#free span.lb{display:none}.two{grid-template-columns:1fr}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -176,6 +186,7 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
   <header>
     <button id="menu" class="ib" data-i="menu" aria-label="Apri chat recenti"></button>
     <div id="title"></div>
+    <button id="free" class="chip" data-i="ram" aria-label="Libera la RAM" hidden><span class="lb">Libera RAM</span></button>
     <button id="pill" class="chip"><i class="dot"></i><span id="pt"></span></button>
     <button id="ctx" class="chip" data-i="layers"><span class="lb">Contesto</span><b id="nb"></b></button>
   </header>
@@ -201,11 +212,17 @@ pre.pv{background:var(--bg);border:1px solid var(--line);border-radius:14px;padd
 
 <dialog id="dm"><div class="dlg">
   <div class="top"><h2>Scegli il modello</h2><button data-close data-i="x" aria-label="Chiudi"></button></div>
-  <p id="gpu">Il download avviene una sola volta, poi funziona anche offline. Dal livello Smart in su si sbloccano le funzioni intelligenti.</p>
+  <p id="gpu">Due passaggi separati: il <b>download</b> salva il modello sul dispositivo (una volta sola, poi funziona offline); il <b>caricamento in RAM</b> lo prepara all'uso. Liberare la RAM non cancella il modello scaricato.</p>
+  <div class="ramp" id="ramp"></div>
   <div class="mods" id="mods"></div>
-  <div id="pr"><div class="bar"><i id="pb"></i></div><div id="pt2"></div></div>
-  <button id="ld" class="btn primary">Scarica e avvia</button>
-  <button id="havef" class="link">Ho già un file del modello</button>
+  <div id="pr">
+    <div class="stp"><div class="h"><span>1 · Download</span><span id="pv1"></span></div><div class="bar" id="b1"><i id="pb1"></i></div></div>
+    <div class="stp"><div class="h"><span>2 · Caricamento in RAM</span><span id="pv2"></span></div><div class="bar" id="b2"><i id="pb2"></i></div></div>
+    <div id="pt2"></div>
+  </div>
+  <button id="ld" class="btn primary">Scarica e carica</button>
+  <div class="acts" style="margin:-6px 0 0"><button id="dlo" class="btn sm">Solo download</button><button id="fr" class="btn sm" hidden>Libera RAM</button></div>
+  <button id="havef" class="link">Importa un modello (.gguf o .will)</button>
 </div></dialog>
 
 <dialog id="dh"><div class="dlg">
@@ -221,30 +238,72 @@ const IC={menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',plus:'<path d="M12 5v14M5 1
  layers:'<path d="M12 4l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4M4 16l8 4 8-4"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20c1-4 4-6 7.5-6s6.5 2 7.5 6"/>',
  cal:'<rect x="3.5" y="5" width="17" height="15" rx="3.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',con:'<rect x="5" y="3.5" width="14" height="17" rx="3"/><circle cx="12" cy="10" r="2.5"/><path d="M8 17c.8-2 2.3-3 4-3s3.2 1 4 3"/>',
  doc:'<path d="M7 3.5h7l4 4V20H6.5V4z"/><path d="M9 12h6M9 16h6"/>',note:'<path d="M4 20l1-4L16 5l3 3L8 19z"/>',eye:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>',
- store:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h6v6H9z"/>',next:'<path d="M9 6l6 6-6 6"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 16.5v3M17 18h3"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>'};
+ store:'<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h6v6H9z"/>',next:'<path d="M9 6l6 6-6 6"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 16.5v3M17 18h3"/>',clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+ check:'<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.5 2.5 4.5-5"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/>',
+ globe:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.5 3.5 5.5 3.5 8.5s-1 6-3.5 8.5c-2.5-2.5-3.5-5.5-3.5-8.5s1-6 3.5-8.5z"/>',
+ ram:'<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/>'};
 const ic=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${IC[n]}</svg>`;
 $$('[data-i]').forEach(e=>e.insertAdjacentHTML('afterbegin',ic(e.dataset.i)));
 const db={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{toast('Spazio pieno: rimuovi qualche documento')}}};
+const GB=mb=>(mb/1000).toFixed(1).replace('.',',')+' GB';
+// [id base, nome reale, download (stima), RAM in MB (dato di WebLLM), livello, descrizione, opzioni]
 const MODELS=[
- {id:'Qwen2.5-0.5B-Instruct-q4f16_1-MLC',n:'Lampo',s:'0,4 GB',t:1,d:'Il più rapido, per domande semplici',short:'Qwen 0.5B'},
- {id:'Llama-3.2-1B-Instruct-q4f16_1-MLC',n:'Agile',s:'0,9 GB',t:1,d:'Veloce e discreto in italiano',short:'Llama 1B'},
- {id:'Qwen2.5-1.5B-Instruct-q4f16_1-MLC',n:'Equilibrato',s:'1,1 GB',t:2,d:'Consigliato per iPhone: sblocca le funzioni intelligenti',short:'Qwen 1.5B'},
- {id:'gemma-2-2b-it-q4f16_1-MLC',n:'Profondo',s:'1,6 GB',t:2,d:'Risposte più sfumate, ma più lento',short:'Gemma 2B'},
- {id:'Llama-3.2-3B-Instruct-q4f16_1-MLC',n:'Brillante',s:'1,9 GB',t:3,d:'Ottimo italiano, il migliore per gli iPhone recenti',short:'Llama 3B'},
- {id:'Qwen2.5-3B-Instruct-q4f16_1-MLC',n:'Preciso',s:'1,9 GB',t:3,d:'Forte con liste, dati e ragionamenti',short:'Qwen 3B'},
- {id:'Phi-3.5-mini-instruct-q4f16_1-MLC',n:'Analista',s:'2,4 GB',t:3,d:'Logica e ragionamento, meno creativo',short:'Phi 3.5'},
- {id:'Qwen2.5-7B-Instruct-q4f16_1-MLC',n:'Maestro',s:'4,5 GB',t:3,d:'Per Mac e PC potenti: assistente completo',short:'Qwen 7B'},
- {id:'Llama-3.1-8B-Instruct-q4f16_1-MLC',n:'Gigante',s:'5 GB',t:3,d:'Per Mac e PC potenti: il più capace',short:'Llama 8B'}];
+ ['SmolLM2-360M-Instruct','SmolLM2 360M','~0,3 GB',376,1,'Minuscolo e istantaneo: per prove e domande semplici, italiano limitato'],
+ ['Qwen2.5-0.5B-Instruct','Qwen2.5 0.5B','~0,4 GB',945,1,'Molto rapido, per domande semplici'],
+ ['gemma3-1b-it','Gemma 3 1B','~0,7 GB',711,1,'Piccolo e moderno, buon italiano per la sua taglia'],
+ ['Llama-3.2-1B-Instruct','Llama 3.2 1B','~0,7 GB',879,1,'Veloce e discreto in italiano'],
+ ['Qwen3-0.6B','Qwen3 0.6B','~0,4 GB',1403,1,'Generazione recente in formato minuscolo',{th:1}],
+ ['Qwen3.5-0.8B','Qwen3.5 0.8B','~0,6 GB',1629,1,'Il più recente tra i modelli piccoli',{th:1}],
+ ['Qwen2.5-1.5B-Instruct','Qwen2.5 1.5B','~1,0 GB',1630,2,'Consigliato per iPhone: sblocca le funzioni intelligenti',{rec:1}],
+ ['SmolLM2-1.7B-Instruct','SmolLM2 1.7B','~1,0 GB',1774,2,'Leggero ed efficiente, molto bravo in inglese'],
+ ['gemma-2-2b-it','Gemma 2 2B','~1,5 GB',1895,2,'Risposte più sfumate, ma più lento'],
+ ['Qwen3-1.7B','Qwen3 1.7B','~1,2 GB',2037,2,'Più preciso del 1.5B, generazione 2025',{th:1}],
+ ['Qwen3.5-2B','Qwen3.5 2B','~1,4 GB',2245,2,'Recente e capace, al limite su iPhone con poca RAM',{th:1}],
+ ['Llama-3.2-3B-Instruct','Llama 3.2 3B','~1,9 GB',2264,3,'Ottimo italiano, il migliore per gli iPhone recenti'],
+ ['Qwen2.5-3B-Instruct','Qwen2.5 3B','~1,9 GB',2505,3,'Forte con liste, dati e ragionamenti'],
+ ['Ministral-3-3B-Instruct-2512-BF16','Ministral 3 3B','~2,1 GB',2864,3,'Mistral recente, ottimo con le lingue europee'],
+ ['gemma-4-E2B-it','Gemma 4 E2B','~3 GB',3387,3,'La novità di Google, efficiente (richiede un browser recente)'],
+ ['Qwen3-4B','Qwen3 4B','~2,5 GB',3432,3,'Ragionamento solido, ottimo con liste e dati',{th:1}],
+ ['Phi-4-mini-instruct','Phi-4 mini','~2,3 GB',3438,3,'Logica e ragionamento, soprattutto in inglese'],
+ ['Phi-3.5-mini-instruct','Phi 3.5 mini','~2,2 GB',3672,3,'Logica e ragionamento, meno creativo'],
+ ['Qwen3.5-4B','Qwen3.5 4B','~2,8 GB',3868,3,'Il più recente della fascia 4B',{th:1}],
+ ['Llama-3.1-8B-Instruct','Llama 3.1 8B','~4,5 GB',5001,3,'Per Mac e PC potenti: il più capace tra i classici'],
+ ['Qwen2.5-7B-Instruct','Qwen2.5 7B','~4,3 GB',5107,3,'Per Mac e PC potenti: assistente completo'],
+ ['Qwen3-8B','Qwen3 8B','~4,9 GB',5696,3,'Per Mac e PC potenti: ragionamento avanzato',{th:1}],
+ ['Qwen3.5-9B','Qwen3.5 9B','~5,6 GB',6433,3,'Per Mac e PC molto potenti: il più grande della lista',{th:1}]
+].map(([k,n,s,r,t,d,o])=>({id:k+'-q4f16_1-MLC',n,short:n,s,r,t,d,th:!!(o&&o.th),rec:!!(o&&o.rec)}));
 const TL=['Nessuno','Base','Smart','Pro'];
-const tier=()=>MODELS.find(m=>m.id===modelId)?.t||1;
-const WURL='https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.79/+esm';
+let G=db.get('gguf',[]);   // modelli GGUF importati: {id,n,size,url,t,d}
+const isG=id=>String(id).startsWith('gguf:');
+const info=id=>MODELS.find(m=>m.id===id)||G.find(m=>m.id===id);
+const tier=()=>info(modelId)?.t||1;
+const gt=b=>b<9e8?1:b<2.2e9?2:3;
+const WURL='https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.88/+esm';
 const W=async()=>W.m||(W.m=await import(WURL));
+// GGUF: llama.cpp compilato in WebAssembly (wllama), con modalità compatibile per Safari/iPhone
+const WLV='3.13.0',WLURL='https://cdn.jsdelivr.net/npm/@wllama/wllama@'+WLV+'/esm/index.js',WLWASM='https://cdn.jsdelivr.net/npm/@wllama/wllama@'+WLV+'/esm/wasm/wllama.wasm';
+const WLM=async()=>WLM.m||(WLM.m=await import(WLURL));
+const WLI=async()=>{const m=await WLM();return new m.Wllama({default:WLWASM},{suppressNativeLog:true,logger:m.LoggerWithoutDebug||undefined})};
+const WLC=async()=>WLC.i||(WLC.i=await WLI());   // istanza usata solo per gestire i file in cache
+function wlEngine(wl){let ac=null;
+ const create=async p=>{ac=new AbortController();
+  const q={messages:p.messages,abortSignal:ac.signal,chat_template_kwargs:{enable_thinking:false}};
+  if(p.temperature!=null)q.temperature=p.temperature;if(p.max_tokens)q.max_tokens=p.max_tokens;if(p.response_format)q.response_format=p.response_format;
+  if(p.stream){const it=await wl.createChatCompletion({...q,stream:true});
+   return(async function*(){try{for await(const c of it)yield c}catch(e){if(!/abort/i.test((e&&e.name||'')+(e&&e.message||'')))throw e}})()}
+  return wl.createChatCompletion(q)};
+ return{chat:{completions:{create}},interruptGenerate(){try{ac&&ac.abort()}catch{}},async unload(){try{await wl.exit()}catch{}}}}
+const xb=()=>info(modelId)?.th?{extra_body:{enable_thinking:false}}:{};
+const clean=t=>String(t).replace(/<think>[\s\S]*?<\/think>\s*/g,'').replace(/<think>[\s\S]*$/,'').trim();
+const jparse=t=>{t=clean(t);const a=t.indexOf('{'),b=t.lastIndexOf('}');return JSON.parse(a>=0?t.slice(a,b+1):t)};
 // ---- hub state (con migrazione dai dati vecchi) ----
 let H=db.get('hub',null);
 if(!H){const p=db.get('profile',{}),ev=db.get('events',[]);
  H={on:{me:true,cal:true,con:true,doc:true,note:true},me:{first:p.first||'',last:p.last||'',city:'',work:'',int:'',about:'',style:'equilibrato'},cal:{feeds:ev.length?[{id:'old',n:'Calendario',ev}]:[]},con:{list:[],det:false},docs:[],notes:[]};db.set('hub',H)}
+H.on={task:true,wx:false,web:false,...H.on};H.tasks=H.tasks||[];H.set={auto:true,idle:15,tips:true,...H.set};H.wx=H.wx||null;
 const saveH=()=>db.set('hub',H);
-let chats=db.get('chats',[]),cur=null,engine=null,ready=false,busy=false,loading=false,modelId=db.get('model',MODELS[2].id),pct=0;
+let chats=db.get('chats',[]),cur=null,engine=null,backend='',ready=false,busy=false,loading=false,modelId=db.get('model',MODELS.find(m=>m.rec).id),pct=0;
+const CACHED=new Set(),P={d:0,r:0,ind:false,ph:'d',t:'',skip:false};let AV=null,idleT=0;
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const save=()=>db.set('chats',chats.slice(0,60));
 const touch=matchMedia('(pointer:coarse)').matches;
@@ -254,14 +313,14 @@ function md(t){const code=[];t=esc(t).replace(/```(?:\w*\n)?([\s\S]*?)(?:```|$)/
  t=t.replace(/`([^`\n]+)`/g,'<code>$1</code>').replace(/\*\*([^*\n]+)\*\*/g,'<b>$1</b>');
  const out=[];let list=null;
  for(const l of t.split('\n')){const m=l.match(/^\s*(?:[-*]|\d+\.) (.*)/);
-  if(m){if(!list){list=[];out.push(list)}list.push(m[1])}else{list=null;out.push(l)}}
- return out.map(x=>Array.isArray(x)?'<ul>'+x.map(i=>'<li>'+i+'</li>').join('')+'</ul>':x.trim()?'<div>'+x+'</div>':'<div class="g"></div>').join('').replace(/\u0000(\d+)\u0000/g,(_,i)=>code[i])}
+  if(m){if(!list){list=[];out.push(list)}list.push(m[1])}else{list=null;const tp=l.match(/^\s*(?:<b>)?Consiglio:?(?:<\/b>)?:?\s*(.+)$/i);out.push(tp?{tip:tp[1]}:l)}}
+ return out.map(x=>x.tip!==undefined?'<div class="tip"><b>Consiglio</b> '+x.tip+'</div>':Array.isArray(x)?'<ul>'+x.map(i=>'<li>'+i+'</li>').join('')+'</ul>':x.trim()?'<div>'+x+'</div>':'<div class="g"></div>').join('').replace(/\u0000(\d+)\u0000/g,(_,i)=>code[i])}
 // ---- sorgenti di contesto ----
-const SRC=[['me','Su di me','user'],['cal','Calendario','cal'],['con','Contatti','con'],['doc','Documenti','doc'],['note','Note libere','note']];
+const SRC=[['me','Su di me','user'],['cal','Calendario','cal'],['con','Contatti','con'],['task','Attività','check'],['wx','Meteo','sun'],['doc','Documenti','doc'],['note','Note libere','note'],['web','Wikipedia','globe']];
 const evCount=()=>H.cal.feeds.reduce((n,f)=>n+f.ev.length,0);
-const DATA={me:()=>Object.entries(H.me).filter(([k,v])=>k!=='style'&&v).length,cal:()=>H.cal.feeds.length,con:()=>H.con.list.length,doc:()=>H.docs.length,note:()=>H.notes.length};
+const DATA={me:()=>Object.entries(H.me).filter(([k,v])=>k!=='style'&&v).length,cal:()=>H.cal.feeds.length,con:()=>H.con.list.length,doc:()=>H.docs.length,note:()=>H.notes.length,task:()=>H.tasks.length,wx:()=>H.wx&&H.wx.lat!=null?1:0,web:()=>1};
 const active=()=>SRC.filter(([k])=>H.on[k]&&DATA[k]());
-const SUB={me:()=>DATA.me()?DATA.me()+' informazioni salvate':'Nome, città, interessi e altro',cal:()=>DATA.cal()?`${DATA.cal()} calendari, ${evCount()} eventi`:'Importa un file .ics o collega un link',con:()=>DATA.con()?DATA.con()+' persone':'Importa un file .vcf',doc:()=>DATA.doc()?DATA.doc()+' file':'Appunti, testi, CSV',note:()=>DATA.note()?DATA.note()+' note':'Scrivi ciò che vuoi che l\'AI sappia'};
+const SUB={me:()=>DATA.me()?DATA.me()+' informazioni salvate':'Nome, città, interessi e altro',cal:()=>DATA.cal()?`${DATA.cal()} calendari, ${evCount()} eventi`:'Importa un file .ics o collega un link',con:()=>DATA.con()?DATA.con()+' persone':'Importa un file .vcf',doc:()=>DATA.doc()?DATA.doc()+' file':'Appunti, testi, CSV',note:()=>DATA.note()?DATA.note()+' note':'Scrivi ciò che vuoi che l\'AI sappia',task:()=>H.tasks.length?H.tasks.filter(t=>!t.done).length+' da fare, '+H.tasks.filter(t=>t.done).length+' fatte':'Cose da fare, con scadenze',wx:()=>H.wx&&H.wx.lat!=null?H.wx.name+(H.wx.cur?', '+Math.round(H.wx.cur.t)+'°':''):'Previsioni per la tua città',web:()=>'Cerca su Wikipedia nelle domande di cultura'};
 const fmt=e=>new Date(e.start).toLocaleString('it-IT',{weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
 function upcoming(n){const now=Date.now(),lim=now+14*864e5;
  return H.cal.feeds.flatMap(f=>f.ev).filter(e=>{const t=+new Date(e.start);return t>=now-36e5&&t<=lim}).sort((a,b)=>new Date(a.start)-new Date(b.start)).slice(0,n)}
@@ -270,12 +329,17 @@ function ctx(){const s=[],m=H.me,nm=(m.first+' '+m.last).trim();
  if(H.on.cal&&DATA.cal()){const u=upcoming(25);s.push('# Calendario, prossimi 14 giorni\n'+(u.length?u.map(e=>'- '+fmt(e)+': '+e.title+(e.loc?' ('+e.loc+')':'')).join('\n'):'Nessun evento in programma.'))}
  if(H.on.con&&DATA.con())s.push('# Persone conosciute\n'+H.con.list.slice(0,60).map(c=>'- '+c.n+(c.b?' (compleanno '+c.b+')':'')+(c.o?', '+c.o:'')+(H.con.det?[c.tel,c.mail].filter(Boolean).map(x=>', '+x).join(''):'')).join('\n'));
  if(H.on.doc&&DATA.doc())s.push(H.docs.map(d=>'# Documento: '+d.n+'\n'+d.t.slice(0,3000)).join('\n\n'));
- if(H.on.note&&DATA.note())s.push(H.notes.map(n=>'# '+(n.t||'Nota')+'\n'+n.x).join('\n\n'));
+  if(H.on.note&&DATA.note())s.push(H.notes.map(n=>'# '+(n.t||'Nota')+'\n'+n.x).join('\n\n'));
+  if(H.on.task&&DATA.task()){const o=H.tasks.filter(t=>!t.done).slice(0,25);o.length&&s.push('# Attività da fare\n'+o.map(t=>'- '+t.t+(t.due?' (entro '+new Date(t.due).toLocaleDateString('it-IT',{day:'numeric',month:'long'})+')':'')).join('\n'))}
+  if(H.on.wx&&H.wx&&H.wx.days)s.push(wxText());
  return s.join('\n\n').slice(0,7000)}
-function sysPrompt(){const now=new Date().toLocaleString('it-IT',{dateStyle:'full',timeStyle:'short'});
+const WMO=c=>c===0?'sereno':c<=2?'poco nuvoloso':c===3?'coperto':c<=48?'nebbia':c<=57?'pioggerella':c<=67?'pioggia':c<=77?'neve':c<=82?'rovesci':c<=86?'neve':'temporale';
+function wxText(){const w=H.wx,dn=['oggi','domani','dopodomani'];return '# Meteo a '+w.name+'\n'+(w.cur?'Adesso '+Math.round(w.cur.t)+'°, '+WMO(w.cur.c)+'.\n':'')+w.days.slice(0,3).map((d,i)=>'- '+(dn[i]||d.d)+': '+WMO(d.c)+', '+Math.round(d.tn)+'-'+Math.round(d.tx)+'°, pioggia '+(d.p??0)+'%').join('\n')}
+function sysPrompt(pro){const now=new Date().toLocaleString('it-IT',{dateStyle:'full',timeStyle:'short'});
  const st={breve:'Rispondi in modo molto breve.',equilibrato:'Rispondi in modo chiaro e conciso.',dettagliato:'Rispondi in modo approfondito e ben strutturato.'}[H.me.style]||'';
  const c=ctx();
- return 'Sei Will, l\'assistente personale dell\'utente, eseguito interamente sul suo dispositivo. Rispondi in italiano, con tono caloroso. '+st+' Adesso è: '+now+'.'+(c?'\n\nInformazioni che l\'utente ha scelto di condividere con te. Usale solo quando servono e non inventare ciò che non è scritto qui:\n'+c:'')}
+ const pr=pro?' Dopo la risposta, se ha davvero senso, aggiungi su una riga a parte che inizia con «Consiglio:» un solo suggerimento breve e concreto, basato su ciò che sai dell\'utente (impegni, scadenze, attività, meteo, interessi). Se non hai nulla di utile da suggerire, non aggiungerlo. Se per aiutarlo meglio ti manca un\'informazione, chiedila con una sola domanda breve.':'';
+ return 'Sei Will, l\'assistente personale dell\'utente, eseguito interamente sul suo dispositivo. Rispondi in italiano, con tono caloroso. '+st+pr+' Adesso è: '+now+'.'+(c?'\n\nInformazioni che l\'utente ha scelto di condividere con te. Usale solo quando servono e non inventare ciò che non è scritto qui:\n'+c:'')}
 // ---- saluto, sidebar ----
 function greet(){const m=H.me;
  $('#hi').textContent=greeting();
@@ -295,17 +359,24 @@ $('#menu').onclick=()=>{$('#side').classList.add('open');$('#scrim').classList.a
 $('#scrim').onclick=closeSide;
 $('#new').onclick=()=>{if(busy)return;cur=null;renderChat();renderSide();closeSide();$('#t').focus()};
 // ---- chat ----
+const AK={event:['cal','Aggiungi al calendario'],note:['note','Salva nota'],task:['check','Aggiungi alle attività'],contact:['con','Salva contatto'],mem:['spark','Ricorda']};
+const actSub=a=>{const d=a.d;return a.k==='event'?esc(fmtL(d.start))+(d.loc?', '+esc(d.loc):''):a.k==='task'?(d.due?'Entro '+esc(new Date(d.due).toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'})):'Senza scadenza'):a.k==='contact'?esc([d.tel,d.mail].filter(Boolean).join(' · ')):a.k==='mem'?esc(d.text):esc(d.text).replace(/\n/g,'<br>')};
+function actsHTML(m){return(m.acts||[]).map((a,i)=>{const[ico,lab]=AK[a.k],d=a.d,x=a.k==='event'?'<button class="btn sm" data-op="ics">File .ics</button>':a.k==='contact'?'<button class="btn sm" data-op="vcf">File .vcf</button>':'';
+ const btn=a.s==='p'?`<button class="btn sm primary" data-op="add">${lab}</button>${x}<button class="btn sm" data-op="skip">Scarta</button>`:a.s==='d'?`<span class="pill2 ok">Fatto</span>${x}`:'<span class="pill2">Scartato</span>';
+ return `<div class="act" data-m="${m.id}" data-n="${i}"><div class="ah"><span class="tile">${ic(ico)}</span><div class="tx"><b>${esc(d.title||d.name)}</b><small>${actSub(a)}</small></div></div><div class="ab">${btn}</div></div>`}).join('')}
+const srcHTML=m=>m.src?`<div class="src">Fonte: <a href="${esc(m.src.u||'https://it.wikipedia.org')}" target="_blank" rel="noopener">Wikipedia, ${esc(m.src.t)}</a></div>`:'';
 const fmtL=d=>new Date(d).toLocaleString('it-IT',{weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
-function actsHTML(m){return(m.acts||[]).map((a,i)=>{const d=a.d,ev=a.k==='event';
- const btn=a.s==='p'?`<button class="btn sm primary" data-op="add">${ev?'Aggiungi al calendario':'Salva nota'}</button>${ev?'<button class="btn sm" data-op="ics">File .ics</button>':''}<button class="btn sm" data-op="skip">Scarta</button>`:a.s==='d'?`<span class="pill2 ok">${ev?'Aggiunto':'Salvata'}</span>${ev?'<button class="btn sm" data-op="ics">File .ics</button>':''}`:'<span class="pill2">Scartato</span>';
- return `<div class="act" data-m="${m.id}" data-n="${i}"><div class="ah"><span class="tile">${ic(ev?'cal':'note')}</span><div class="tx"><b>${esc(d.title)}</b><small>${ev?esc(fmtL(d.start))+(d.loc?', '+esc(d.loc):''):esc(d.text).replace(/\n/g,'<br>')}</small></div></div><div class="ab">${btn}</div></div>`}).join('')}
-const icsOf=e=>{const f=d=>new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),s=new Date(e.start);
- return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Will AI//IT','BEGIN:VEVENT','UID:'+uid()+'@willai','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(s),'DTEND:'+f(+s+36e5),'SUMMARY:'+e.title,e.loc?'LOCATION:'+e.loc:'','END:VEVENT','END:VCALENDAR'].filter(Boolean).join('\r\n')};
+const icsT=s=>String(s).replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n');
+const icsEv=e=>{const f=d=>new Date(d).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),s=new Date(e.start);
+ return['BEGIN:VEVENT','UID:'+uid()+'@willai','DTSTAMP:'+f(Date.now()),'DTSTART:'+f(s),'DTEND:'+f(+s+36e5),'SUMMARY:'+icsT(e.title),e.loc?'LOCATION:'+icsT(e.loc):'','BEGIN:VALARM','TRIGGER:-PT30M','ACTION:DISPLAY','DESCRIPTION:'+icsT(e.title),'END:VALARM','END:VEVENT'].filter(Boolean)};
+const icsOf=(...ev)=>['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Will AI//IT',...ev.flatMap(icsEv),'END:VCALENDAR'].join('\r\n');
+const vcfOf=c=>['BEGIN:VCARD','VERSION:3.0','FN:'+icsT(c.name||c.n),c.tel?'TEL:'+c.tel:'',c.mail?'EMAIL:'+c.mail:'','END:VCARD'].filter(Boolean).join('\r\n');
+function remember(x){let n=H.notes.find(n=>n.t==='Ricordi di Will');if(!n){n={id:uid(),t:'Ricordi di Will',x:''};H.notes.push(n)}n.x+=(n.x?'\n':'')+'- '+x}
 async function saveFile(file){if(navigator.canShare?.({files:[file]})){try{await navigator.share({files:[file]});return}catch(e){if(e.name==='AbortError')return}}
  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),6e4)}
 function addMsg(role,text,think,m){const r=document.createElement('div');
  if(role==='user'){r.className='row user';r.innerHTML='<div class="u"></div>';r.firstChild.textContent=text}
- else{r.className='row ai';r.innerHTML='<div class="orb'+(think?' think':'')+'"><i></i></div><div class="wrap"><div class="body"></div><div class="ax"></div></div>';r.querySelector('.body').innerHTML=text?md(text):'';if(m?.acts)r.querySelector('.ax').innerHTML=actsHTML(m)}
+ else{r.className='row ai';r.innerHTML='<div class="orb'+(think?' think':'')+'"><i></i></div><div class="wrap"><div class="body"></div><div class="ax"></div></div>';r.querySelector('.body').innerHTML=text?md(text):'';if(m)r.querySelector('.ax').innerHTML=actsHTML(m)+srcHTML(m)}
  $('#msgs').appendChild(r);follow(true);return r}
 function follow(f){const s=$('#scroll');if(f||s.scrollHeight-s.scrollTop-s.clientHeight<140)s.scrollTo({top:s.scrollHeight})}
 function renderChat(){const c=chats.find(x=>x.id===cur);$('#msgs').innerHTML='';
@@ -352,6 +423,12 @@ function insights(){const out=[],now=new Date(),sod=d=>new Date(d.getFullYear(),
  if(wd===0&&h>=16)out.push({t:'Domenica sera: pianifichiamo la settimana?',p:'Aiutami a pianificare la settimana che inizia domani.',i:'clock'});
  else if(wd===5&&h>=15)out.push({t:'Venerdì: cosa fai nel weekend?',p:'Dammi qualche idea per il weekend.',i:'clock'});
  else if(h>=21)out.push({t:'Prepariamo la giornata di domani?',p:'Aiutami a preparare la giornata di domani.',i:'clock'});
+ if(H.on.task){const o=H.tasks.filter(t=>!t.done&&t.due&&dd(new Date(t.due))<=1).sort((a,b)=>new Date(a.due)-new Date(b.due));
+  if(o.length)out.push({t:o.length===1?'Scadenza '+lab(new Date(o[0].due))+': '+o[0].t:o.length+' attività in scadenza tra oggi e domani',p:o.length===1?'Ho da fare «'+o[0].t+'» '+lab(new Date(o[0].due))+'. Aiutami a organizzarmi.':'Ho '+o.length+' attività in scadenza tra oggi e domani. Aiutami a dare le priorità.',i:'check'})}
+ if(H.on.wx&&H.wx&&H.wx.days){const night=now.getHours()>=18,d=H.wx.days[night?1:0],k=night?'domani':'oggi';
+  if(d){if(d.p>=55)out.push({t:cap(k)+' a '+H.wx.name+': probabile pioggia ('+d.p+'%)',p:'Per '+k+' è prevista pioggia a '+H.wx.name+'. Cosa mi conviene cambiare nei miei piani?',i:'sun'});
+   else if(d.tx>=32||d.tn<=0)out.push({t:cap(k)+' a '+H.wx.name+': '+Math.round(d.tn)+'-'+Math.round(d.tx)+'°',p:'Con queste temperature ('+Math.round(d.tn)+'-'+Math.round(d.tx)+'°) come mi organizzo '+k+'?',i:'sun'})}}
+ if(smartOk(2)&&now.getHours()>=5&&now.getHours()<11)out.push({t:'Il tuo brief di oggi',p:'Fammi il brief di oggi: impegni, scadenze, meteo e cosa conviene fare per primo.',i:'spark'});
  if(!DATA.cal())out.push({t:'Collega un calendario e Will ti avviserà degli impegni',go:'cal',i:'cal'});
  if(ready&&tier()<2&&H.on.smart!==false)out.push({t:'Sblocca i consigli intelligenti con un modello Smart o Pro',go:'smart',i:'spark'});
  return out}
@@ -361,31 +438,96 @@ function renderIns(){const el=$('#ins');if(!el)return;
 $('#ins').onclick=e=>{const b=e.target.closest('[data-n]');if(!b)return;const x=curIns[b.dataset.n];x.go?hub(x.go):send(x.p)};
 async function genTips(){if(!smartOk(2)||!ctx())return;const key=new Date().toDateString()+ctx().length+modelId;const t=db.get('tips',null);
  if(t&&t.k===key){tips=t.l;return renderIns()}
- const r=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},{role:'user',content:'Scrivi 3 consigli proattivi brevi (massimo 14 parole ciascuno, in seconda persona) basati sui miei impegni e sulle informazioni che conosci: cosa devo ricordare, preparare o evitare. Rispondi SOLO con JSON: {"tips":["...","...","..."]}'}],response_format:{type:'json_object'},temperature:.4,max_tokens:220});
- tips=(JSON.parse(r.choices[0].message.content).tips||[]).filter(x=>typeof x==='string'&&x.length<140).slice(0,3);db.set('tips',{k:key,l:tips});renderIns()}
+ const r=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()},{role:'user',content:'Scrivi 4 consigli proattivi brevi (massimo 14 parole ciascuno, in seconda persona) basati sui miei impegni, attività, meteo e sulle informazioni che conosci: cosa devo ricordare, preparare o evitare. Rispondi SOLO con JSON: {"tips":["...","...","...","..."]}'}],response_format:{type:'json_object'},temperature:.4,max_tokens:260,...xb()});
+ tips=(jparse(r.choices[0].message.content).tips||[]).filter(x=>typeof x==='string'&&x.length<140).slice(0,4);db.set('tips',{k:key,l:tips});renderIns()}
 function hero(){$('#start').hidden=ready||loading;$('#horb').classList.toggle('think',loading);renderIns()}
-// ---- modello ----
-$('#mods').innerHTML=MODELS.map(m=>`<label class="mod"><input type="radio" name="m" value="${m.id}"><span><b>${m.n}</b> <span class="pill2">${TL[m.t]}</span><small>${m.d}</small></span><em>${m.s}</em></label>`).join('');
-function pill(){const p=$('#pill');p.className='chip'+(ready?' ready':loading?' load':'');
- $('#pt').textContent=ready?MODELS.find(m=>m.id===modelId)?.short:loading?'Carico '+pct+'%':'Scegli modello';
- $('#t').placeholder=ready?'Scrivi un messaggio':'Avvia un modello per iniziare';
- $('#ld').disabled=loading;$('#ld').textContent=loading?'Download in corso…':'Scarica e avvia';hero();ui()}
-function openModel(){$$('#mods input').forEach(i=>i.checked=i.value===modelId);
- if(!navigator.gpu)$('#gpu').textContent='Questo browser non supporta WebGPU. Serve Safari 26 o un Chrome recente.';
- $('#dm').showModal();W().then(w=>{const ok=new Set(w.prebuiltAppConfig.model_list.map(m=>m.model_id));$$('#mods .mod').forEach(l=>l.hidden=!ok.has(l.querySelector('input').value))}).catch(()=>{})}
-$('#pill').onclick=openModel;$('#start').onclick=openModel;
+// ---- modello: download (su disco) e caricamento (in RAM) sono due passaggi distinti ----
+const grpOf=m=>m.r<=2600?'Adatti a iPhone e telefoni':'Per Mac, PC e iPad';
+const stOf=id=>id===modelId&&ready?['In RAM','on']:CACHED.has(id)?['Scaricato','ok']:['Da scaricare',''];
+function modCard(m){const[st,c]=stOf(m.id),g=isG(m.id);
+ return `<label class="mod"><input type="radio" name="m" value="${esc(m.id)}"><span class="mx"><b>${esc(m.n)}</b> <span class="pill2">${TL[m.t]}</span> <span class="pill2 ${c}">${st}</span>${m.rec?' <span class="pill2 on">Consigliato</span>':''}<small>${esc(m.d)}</small><small class="sz">${g?'Importato, '+MB(m.size):'Download '+m.s+', RAM '+GB(m.r)}</small></span></label>`}
+function renderMods(){const sel=$('#mods input:checked')?.value||modelId;
+ const by={};MODELS.filter(m=>!AV||AV.has(m.id)).forEach(m=>(by[grpOf(m)]??=[]).push(m));
+ $('#mods').innerHTML=Object.entries(by).map(([k,l])=>`<div class="grp">${k}</div>`+l.sort((a,b)=>a.r-b.r).map(modCard).join('')).join('')+(G.length?'<div class="grp">Importati</div>'+G.map(modCard).join(''):'');
+ const r=$$('#mods input').find(i=>i.value===sel)||$$('#mods input')[0];if(r)r.checked=true;
+ rampUI();syncLd()}
+const rampHTML=()=>{const m=info(modelId),n=CACHED.size,sc=n+(n===1?' modello scaricato':' modelli scaricati')+' sul dispositivo';
+ return ready&&m?`<div class="tx"><b>In RAM: ${esc(m.n)}</b><small>${isG(m.id)?MB(m.size):'circa '+GB(m.r)} occupati, ${sc}</small></div>`:`<div class="tx"><b>Nessun modello in RAM</b><small>${sc}</small></div>`};
+function rampUI(){const h=rampHTML();['#ramp','#ramp2'].forEach(q=>{const e=$(q);if(e)e.innerHTML=h});$('#fr').hidden=!ready}
+function syncLd(){const id=$('#mods input:checked')?.value,c=id&&CACHED.has(id),on=id===modelId&&ready;
+ $('#ld').disabled=loading||on||!id;$('#ld').textContent=loading?'Operazione in corso…':on?'Già in RAM':c?'Carica in RAM':'Scarica e carica';
+ $('#dlo').hidden=!id||c||isG(id)||loading}
+function pill(){const p=$('#pill'),dl=loading&&P.ph==='d';
+ p.className='chip'+(ready?' ready':dl?' dl':loading?' load':'');
+ $('#pt').textContent=ready?info(modelId)?.n:loading?(dl?'Download '+Math.round(P.d*100)+'%':'In RAM '+(P.ind&&!P.r?'…':Math.round(P.r*100)+'%')):'Scegli modello';
+ $('#free').hidden=!ready;
+ $('#t').placeholder=ready?'Scrivi un messaggio':(CACHED.has(modelId)||isG(modelId))?'Scrivi: il modello si carica da solo':'Avvia un modello per iniziare';
+ syncLd();rampUI();hero();ui()}
+function paintPr(){const f=(b,v,ind)=>{$('#pb'+b).style.width=Math.round(v*100)+'%';$('#b'+b).classList.toggle('ind',!!ind)};
+ f(1,P.d);f(2,P.r,P.ind&&!P.r&&P.ph==='r');
+ $('#pv1').textContent=P.d>=1?(P.skip?'già scaricato':'fatto'):Math.round(P.d*100)+'%';
+ $('#pv2').textContent=P.ph==='r'?(P.ind&&!P.r?'in corso…':Math.round(P.r*100)+'%'):'in attesa';
+ $('#pt2').textContent=P.t}
+function refreshUIs(){pill();if($('#dm').open)renderMods();if(V==='store'&&$('#dh').open&&$('#smods'))storeRows()}
+async function ggufMap(){const wl=await WLC();return new Map((await wl.modelManager.getModels()).map(m=>[m.url,m]))}
+async function refreshCached(){
+ try{const w=await W();AV=new Set(w.prebuiltAppConfig.model_list.map(m=>m.model_id));
+  const rows=await Promise.all(MODELS.map(async m=>[m.id,await w.hasModelInCache(m.id).catch(()=>false)]));
+  MODELS.forEach(m=>CACHED.delete(m.id));rows.forEach(([i,c])=>c&&CACHED.add(i))}catch{}
+ if(G.length){try{const gm=await ggufMap();G.forEach(g=>gm.has(g.url)?CACHED.add(g.id):CACHED.delete(g.id))}catch{}}}
+function openModel(){
+ if(!navigator.gpu)$('#gpu').innerHTML='Questo browser non supporta WebGPU (serve Safari 26 o un Chrome recente). Puoi comunque importare un modello <b>.gguf</b>: funziona anche senza.';
+ renderMods();$('#dm').showModal();refreshCached().then(()=>{pill();if($('#dm').open)renderMods()})}
+$('#pill').onclick=openModel;$('#start').onclick=()=>{(CACHED.has(modelId)||isG(modelId))?load(modelId):openModel()};
 $('#havef').onclick=()=>{$('#dm').close();hub('store')};
+$('#mods').onchange=syncLd;
 $('#ld').onclick=()=>load($('#mods input:checked').value);
-async function load(id){
- if(!navigator.gpu)return toast('WebGPU non disponibile su questo browser');
- if(loading)return;
- loading=true;ready=false;modelId=id;pct=0;pill();$('#pr').classList.add('on');
- const cb=p=>{pct=Math.round(p.progress*100);$('#pb').style.width=pct+'%';$('#pt2').textContent=p.text;pill()};
- try{const w=await W();
-  if(engine){engine.setInitProgressCallback(cb);await engine.reload(id)}else engine=await w.CreateMLCEngine(id,{initProgressCallback:cb});
-  ready=true;db.set('model',id);toast('Modello pronto');$('#dm').close();navigator.storage?.persist?.();bgq(genTips)
- }catch(e){$('#pt2').textContent='Errore: '+(e.message||e)+'. Riprova o scegli un modello più leggero.'}
- loading=false;pill();if(V==='store'&&$('#dh').open)hub('store')}
+$('#dlo').onclick=()=>load($('#mods input:checked').value,{only:true});
+$('#fr').onclick=()=>release();$('#free').onclick=()=>release();
+function touchIdle(){clearTimeout(idleT);const m=+H.set.idle;if(m&&ready)idleT=setTimeout(()=>{if(busy)return touchIdle();release('RAM liberata dopo '+m+' minuti senza uso. Il modello si ricarica da solo quando scrivi')},m*6e4)}
+async function release(msg,silent){
+ clearTimeout(idleT);if(!ready)return;
+ const e=engine;if(busy)try{e.interruptGenerate()}catch{}
+ ready=false;if(backend==='gguf'){engine=null;backend=''}   // subito: la UI non aspetta lo scarico
+ refreshUIs();if(!silent)toast(msg||'RAM liberata');
+ try{await e.unload()}catch{}}
+async function ensure(){   // prepara il modello quando si scrive e non è in RAM
+ if(ready)return true;if(loading)return false;
+ const id=modelId;let ok=CACHED.has(id)||(isG(id)&&G.some(x=>x.id===id));
+ if(!ok&&!isG(id)&&info(id)){try{ok=await(await W()).hasModelInCache(id)}catch{}}
+ if(!ok)return false;toast('Carico «'+info(id).n+'» in RAM…');await load(id);return ready}
+async function loadG(id){
+ const e=G.find(x=>x.id===id);if(!e)throw new Error('modello non trovato');
+ let wl=await WLI();
+ let mod=(await wl.modelManager.getModels()).find(x=>x.url===e.url);
+ if(!mod){if(!/^https:/.test(e.url))throw new Error('il file non è più nella memoria del browser: reimportalo');
+  mod=await wl.modelManager.downloadModel(e.url,{progressCallback:({loaded,total})=>{P.ph='d';P.d=total?loaded/total:0;paintPr();pill()}})}
+ P.d=1;P.ph='r';P.ind=true;P.r=0;paintPr();pill();
+ const prm={n_ctx:touch?4096:8192};
+ try{await wl.loadModel(mod,prm)}catch(err){
+  try{await wl.exit()}catch{}
+  wl=await WLI();await wl.loadModel(mod,{...prm,n_gpu_layers:0})}   // se la GPU non basta, riprova su CPU
+ engine=wlEngine(wl);backend='gguf'}
+async function load(id,opt={}){
+ if(loading)return;const g=isG(id);
+ if(!g&&!navigator.gpu)return toast('WebGPU non disponibile su questo browser: importa un modello .gguf');
+ if(ready&&id===modelId&&!opt.only)return;
+ loading=true;
+ if(ready&&(g||backend==='gguf'))await release(null,true);
+ ready=false;modelId=id;P.skip=g||CACHED.has(id);P.d=P.skip?1:0;P.r=0;P.ind=false;P.ph=P.skip?'r':'d';P.t='';
+ $('#pr').classList.add('on');paintPr();pill();
+ const cb=p=>{const t=p.text||'';if(/fetch/i.test(t)){P.ph='d';P.d=p.progress}else{P.ph='r';P.d=1;P.r=p.progress}P.t=t;paintPr();pill()};
+ try{
+  if(g)await loadG(id);
+  else{const w=await W();
+   if(engine&&backend!=='mlc'){try{await engine.unload()}catch{}engine=null}
+   if(engine){engine.setInitProgressCallback(cb);await engine.reload(id)}else engine=await w.CreateMLCEngine(id,{initProgressCallback:cb});
+   backend='mlc'}
+  ready=true;db.set('model',id);CACHED.add(id);navigator.storage?.persist?.();
+  if(opt.only){loading=false;await release(null,true);toast('Scaricato: '+info(id).n+'. La RAM è libera')}
+  else{toast('Modello pronto');$('#dm').close();bgq(genTips);touchIdle()}
+ }catch(e){P.ph='r';$('#pt2').textContent='Errore: '+(e.message||e)+'. Riprova o scegli un modello più leggero.'}
+ loading=false;refreshUIs()}
 // ---- parser ----
 function pd(v){const m=v.match(/(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})(Z)?)?/);if(!m)return null;
  const[,y,mo,d,h=0,mi=0,s=0,z]=m;return z?new Date(Date.UTC(+y,mo-1,+d,+h,+mi,+s)):new Date(+y,mo-1,+d,+h,+mi,+s)}
@@ -399,11 +541,11 @@ function parseVCF(t){return t.replace(/\r?\n[ \t]/g,'').split(/BEGIN:VCARD/i).sl
  return n?{n,tel:g('TEL'),mail:g('EMAIL'),b:g('BDAY'),o:g('ORG')?.replace(/;/g,' ').trim()}:null}).filter(Boolean)}
 // ---- hub ----
 let V='home',tab='g';
-const TITLES={home:'Il tuo contesto',me:'Su di me',cal:'Calendario',con:'Contatti',doc:'Documenti',note:'Note libere',smart:'Funzioni intelligenti',preview:'Cosa vede l\'AI',store:'Archivio e modello'};
+const TITLES={home:'Il tuo contesto',me:'Su di me',cal:'Calendario',con:'Contatti',doc:'Documenti',note:'Note libere',smart:'Funzioni intelligenti',preview:'Cosa vede l\'AI',store:'Archivio e modello',task:'Attività',wx:'Meteo',web:'Ricerca su Wikipedia'};
 const GUIDE={g:['Apri <b>calendar.google.com</b> dal browser (da iPhone usa la versione desktop del sito).','Tocca l\'ingranaggio, poi <b>Impostazioni</b> e <b>Importa/Esporta</b>.','Premi <b>Esporta</b>: scarica uno zip con un file .ics per ogni calendario.','Decomprimilo (su iPhone basta toccare lo zip nell\'app File) e scegli il file qui sotto.'],
  a:['<b>Su Mac:</b> nell\'app Calendario fai clic destro sul calendario, poi <b>Esporta…</b> e salva il file .ics.','<b>Su iPhone:</b> apri <b>icloud.com/calendar</b>, tocca l\'icona di condivisione accanto al calendario e attiva <b>Calendario pubblico</b>.','Copia il link e incollalo in Safari sostituendo <b>webcal://</b> con <b>https://</b>: si scarica il file .ics.','Scegli il file qui sotto, poi puoi disattivare la condivisione pubblica.'],
  o:['Apri <b>outlook.live.com/calendar</b> e vai in <b>Impostazioni</b>, poi <b>Calendario</b> e <b>Calendari condivisi</b>.','Sotto <b>Pubblica un calendario</b> scegli quale calendario e quanto dettaglio, poi <b>Pubblica</b>.','Copia il link <b>ICS</b> e aprilo nel browser: si scarica il file .ics.','Scegli il file qui sotto.']};
-const FEAT=[['Consigli del giorno','Will legge calendario e note e ti suggerisce cosa preparare.',2],['Azioni','Scrivi "aggiungimi la spesa domani alle 18": Will prepara evento e lista.',2],['Titoli automatici','Dà un nome alle tue chat.',2],['Risposte suggerite','Dopo ogni risposta propone i passi successivi.',3]];
+const FEAT=[['Consigli del giorno','Will legge calendario, attività, meteo e note e ti suggerisce cosa preparare.',2],['Consigli nelle risposte','Ogni tanto chiude la risposta con un «Consiglio» mirato, senza esagerare.',2],['Azioni','Scrivi "aggiungimi la spesa domani alle 18": Will prepara eventi, attività, note e contatti da confermare.',2],['Memoria','Nota le cose importanti che racconti (allergie, esami, preferenze) e ti chiede se ricordarle.',2],['Brief del giorno','Al mattino ti propone un riepilogo di impegni, scadenze e meteo.',2],['Titoli automatici','Dà un nome alle tue chat.',2],['Risposte suggerite','Dopo ogni risposta propone i passi successivi.',3],['Pianificatore','Per richieste ampie ("organizza la mia settimana") prepara fino a 5 azioni insieme.',3]];
 const nAct=()=>H.on.smart!==false?FEAT.filter(f=>tier()>=f[2]).length:0;
 const smartCard=()=>`<div class="card" data-go="smart"><div class="tile">${ic('spark')}</div><div class="tx"><b>Funzioni intelligenti</b><small>Livello ${TL[tier()]}: ${nAct()} di ${FEAT.length} attive</small></div><label class="sw"><input type="checkbox" data-tog="smart" ${H.on.smart!==false?'checked':''} aria-label="Attiva le funzioni intelligenti"><span></span></label></div>`;
 const PRESET=['Allergie','Orari scuola o lavoro','Obiettivi','Persone importanti','Preferenze'];
@@ -422,7 +564,7 @@ const R={
   <p class="hint">Si salva da solo.</p>`,
  cal:()=>`<p>Puoi collegare più calendari insieme: Google, Apple, Outlook, scuola. L'AI li legge tutti.</p>`+
   H.cal.feeds.map(f=>`<div class="feed"><div class="tx"><b>${esc(f.n)}</b><small>${f.ev.length} eventi, ${f.url?'da link':'da file'}</small></div>${rmBtn('rmfeed',f.id)}</div>`).join('')+
-  `<div class="acts"><button class="btn primary sm" data-act="addics">Aggiungi un file .ics</button>${H.cal.feeds.some(f=>f.url)?'<button class="btn sm" data-act="refresh">Aggiorna i link</button>':''}</div>
+  `<div class="acts"><button class="btn primary sm" data-act="addics">Aggiungi un file .ics</button>${H.cal.feeds.some(f=>f.url)?'<button class="btn sm" data-act="refresh">Aggiorna i link</button>':''}${(H.cal.feeds.find(f=>f.id==='will')||{ev:[]}).ev.length?'<button class="btn sm" data-act="expics">Esporta gli eventi di Will (.ics)</button>':''}</div>
   <div class="sec">Come ottenere il file</div>
   <div class="seg">${[['g','Google'],['a','Apple'],['o','Outlook']].map(([k,n])=>`<button data-act="tab" data-id="${k}" class="${tab===k?'on':''}">${n}</button>`).join('')}</div>
   <ol>${GUIDE[tab].map(s=>`<li>${s}</li>`).join('')}</ol>
@@ -432,23 +574,41 @@ const R={
  con:()=>`<p>Importa la rubrica come file .vcf (da iCloud.com o Google Contatti, voce Esporta). L'AI conoscerà i nomi e i compleanni.</p>
   ${DATA.con()?`<div class="feed"><div class="tx"><b>${DATA.con()} persone</b><small>Rubrica importata</small></div>${rmBtn('rmcon',1)}</div>`:''}
   <label class="chk"><input type="checkbox" data-det ${H.con.det?'checked':''}>Includi anche telefoni ed email</label>
-  <div class="acts"><button class="btn primary sm" data-act="addvcf">${DATA.con()?'Aggiungi un altro file':'Scegli un file .vcf'}</button></div>`,
- doc:()=>`<p>Aggiungi testi che l'AI deve conoscere: appunti, orari, CSV, JSON. Ogni file è letto fino a 3000 caratteri.</p>`+
+  <div class="acts"><button class="btn primary sm" data-act="addvcf">${DATA.con()?'Aggiungi un altro file':'Scegli un file .vcf'}</button>${'contacts' in navigator&&window.ContactsManager?'<button class="btn sm" data-act="pickcon">Scegli dai contatti</button>':''}</div>`,
+ doc:()=>`<p>Aggiungi testi che l'AI deve conoscere: PDF, Word (.docx), pagine HTML, appunti, CSV, JSON. Ogni file è letto fino a 3000 caratteri.</p>`+
   H.docs.map(d=>`<div class="feed"><div class="tx"><b>${esc(d.n)}</b><small>${d.t.length} caratteri</small></div>${rmBtn('rmdoc',d.id)}</div>`).join('')+
-  `<div class="acts"><button class="btn primary sm" data-act="adddoc">Aggiungi file</button></div>`,
+  `<div class="acts"><button class="btn primary sm" data-act="adddoc">Aggiungi file</button><button class="btn sm" data-act="pastedoc">Incolla dagli appunti</button></div>`,
  note:()=>`<p>Scrivi quello che vuoi: l'AI lo avrà sempre presente.</p>
   <div class="tags" style="justify-content:flex-start">${PRESET.map(p=>`<button data-act="addnote" data-id="${p}">${p}</button>`).join('')}</div>`+
   H.notes.map(n=>`<div class="note"><div class="h"><input class="in" data-nf="t" data-id="${n.id}" value="${esc(n.t)}" placeholder="Titolo">${rmBtn('rmnote',n.id)}</div><textarea class="in" data-nf="x" data-id="${n.id}" placeholder="Cosa deve sapere l'AI?">${esc(n.x)}</textarea></div>`).join('')+
-  `<div class="acts"><button class="btn primary sm" data-act="addnote" data-id="">Nuova nota</button></div>`,
+  `<div class="acts"><button class="btn primary sm" data-act="addnote" data-id="">Nuova nota</button><button class="btn sm" data-act="pastenote">Incolla dagli appunti</button></div>`,
  smart:()=>`<p>Will va oltre le risposte: legge il tuo contesto e ti aiuta in anticipo. Le funzioni più avanzate richiedono un modello più potente.</p>`+
   FEAT.map(f=>`<div class="feed"><div class="tx"><b>${f[0]}</b><small>${f[1]}</small></div><span class="pill2${tier()>=f[2]&&H.on.smart!==false?' ok':''}">${tier()>=f[2]?(H.on.smart!==false?'Attiva':'Spenta'):'Livello '+TL[f[2]]}</span></div>`).join('')+
   `<div class="feed"><div class="tx"><b>Promemoria</b><small>Compleanni, impegni vicini e sovrapposizioni dal calendario e dai contatti.</small></div><span class="pill2 ok">Sempre attivi</span></div>
-  <p class="hint">Modello scelto: ${MODELS.find(m=>m.id===modelId)?.short}, livello ${TL[tier()]}.</p><div class="acts"><button class="btn primary sm" data-act="models">Scegli un altro modello</button></div>`,
+  <p class="hint">Modello scelto: ${info(modelId)?.n}, livello ${TL[tier()]}.</p><div class="acts"><button class="btn primary sm" data-act="models">Scegli un altro modello</button></div>`,
  preview:()=>{const c=ctx();return `<p>Questo è tutto ciò che l'AI riceve oltre ai tuoi messaggi: circa ${Math.ceil(c.length/3.5)} token. I modelli piccoli hanno poca memoria, quindi il testo è limitato a 7000 caratteri.</p><pre class="pv">${esc(c||'Nessuna informazione condivisa.')}</pre>`},
- store:()=>`<p>I modelli stanno nella <b>Cache Storage</b> del browser per questo sito: non sono visibili nell'app File. Se il browser la svuota, puoi rimetterli da un file esportato.</p>
+ task:()=>`<p>Una lista di cose da fare: Will la conosce, ti segnala le scadenze e aggiunge attività quando glielo chiedi in chat.</p>
+  <div class="fr0"><input class="in" id="tnew" placeholder="Nuova attività"><input class="in" id="tdue" type="date" style="flex:none;width:150px" aria-label="Scadenza"><button class="btn" data-act="addtask" aria-label="Aggiungi">${ic('plus')}</button></div>`+
+  (H.tasks.length?H.tasks.map(t=>`<div class="chk2${t.done?' done':''}"><input type="checkbox" data-tk="${t.id}" ${t.done?'checked':''} aria-label="Fatta"><div class="tx"><b>${esc(t.t)}</b>${t.due?`<small>Entro ${esc(new Date(t.due).toLocaleDateString('it-IT',{day:'numeric',month:'long'}))}</small>`:''}</div>${rmBtn('rmtask',t.id)}</div>`).join(''):'<p class="hint">Nessuna attività.</p>')+
+  (H.tasks.some(t=>t.done)?'<div class="acts"><button class="btn sm" data-act="cltask">Rimuovi le completate</button></div>':''),
+ wx:()=>`<p>Will può conoscere il meteo dei prossimi giorni per consigliarti (ombrello, giacca, programmi all'aperto). Il nome della città, o le coordinate, vengono inviati al servizio gratuito Open-Meteo: nient'altro lascia il dispositivo.</p>
+  <label class="chk"><input type="checkbox" data-tog="wx" ${H.on.wx?'checked':''}>Usa il meteo nei consigli</label>
+  <div class="fr0"><input class="in" id="wxcity" placeholder="Città" value="${esc((H.wx&&H.wx.q)||H.me.city||'')}"><button class="btn" data-act="wxset">Cerca</button></div>
+  <div class="acts"><button class="btn sm" data-act="wxgeo">Usa la mia posizione</button>${H.wx?'<button class="btn sm" data-act="wxref">Aggiorna</button>':''}</div>`+
+  (H.wx&&H.wx.days?`<div class="sec">${esc(H.wx.name)}</div><div class="wxd">${H.wx.days.map((d,i)=>`<div><b>${['Oggi','Domani'][i]||new Date(d.d).toLocaleDateString('it-IT',{weekday:'long'})}</b>${WMO(d.c)}<br>${Math.round(d.tn)}° / ${Math.round(d.tx)}°<br>pioggia ${d.p??0}%</div>`).join('')}</div>`:''),
+ web:()=>`<p>Per le domande di cultura generale ("chi era Marie Curie?") Will può cercare un riassunto su Wikipedia e usarlo per rispondere: i modelli piccoli sbagliano meno. A Wikipedia viene inviata solo la tua domanda, e solo se attivi questa opzione. Sotto la risposta compare sempre la fonte.</p><label class="chk"><input type="checkbox" data-tog="web" ${H.on.web?'checked':''}>Attiva la ricerca su Wikipedia</label>`,
+ store:()=>`<p>I modelli stanno nella <b>memoria del browser</b> per questo sito (non nell'app File). <b>Download</b> = file sul dispositivo; <b>RAM</b> = modello pronto all'uso. Se il browser svuota la memoria puoi rimetterli da un file .will.</p>
   <div id="sinfo" class="list"><p class="hint">Calcolo…</p></div>
+  <div class="sec">Memoria RAM</div><div class="ramp" id="ramp2"></div>
+  <div class="acts" style="margin-top:0"><button class="btn sm" data-act="free">Libera RAM ora</button></div>
+  <label class="f">Libera la RAM dopo un periodo di inattività<select class="in" data-set="idle">${[[0,'Mai'],[5,'5 minuti'],[15,'15 minuti'],[30,'30 minuti'],[60,'1 ora']].map(([v,n])=>`<option value="${v}" ${+H.set.idle===v?'selected':''}>${n}</option>`).join('')}</select></label>
+  <label class="chk"><input type="checkbox" data-set="auto" ${H.set.auto!==false?'checked':''}>Carica il modello in RAM all'avvio dell'app</label>
+  <label class="chk"><input type="checkbox" data-set="tips" ${H.set.tips!==false?'checked':''}>Consigli «Consiglio:» nelle risposte</label>
   <div class="sec">Modelli</div><div id="smods" class="list"></div>
-  <div class="acts"><button class="btn primary sm" data-act="impmod">Importa un file .lai</button><button class="btn sm" data-act="persist">Proteggi dalla cancellazione</button></div>
+  <div class="sec">Importa un modello</div>
+  <p class="hint">Formati: <b>.gguf</b> (il più diffuso: lo trovi su Hugging Face, LM Studio, Ollama; scegli quantizzazioni Q4 o Q5, su iPhone meglio sotto 2 GB) e <b>.will</b> (esportati da Will AI, anche i vecchi .lai). I .gguf girano con llama.cpp e sono più lenti dei modelli della lista.</p>
+  <div class="acts"><button class="btn primary sm" data-act="impmod">Scegli file .gguf o .will</button><button class="btn sm" data-act="persist">Proteggi dalla cancellazione</button></div>
+  <div class="fr0"><input class="in" id="gurl" placeholder="https://… .gguf" inputmode="url"><button class="btn" data-act="gurl">Scarica</button></div>
   <div class="sec">Backup dei tuoi dati</div><p class="hint">Chat, profilo, calendari e note stanno solo su questo dispositivo. Se reinstalli l'app si perdono: esportali prima.</p>
   <div class="acts"><button class="btn sm" data-act="expdata">Esporta dati</button><button class="btn sm" data-act="impdata">Importa dati</button></div>
   <p class="hint" id="diag"></p>`};
@@ -472,21 +632,37 @@ $('#hv').addEventListener('click',async e=>{
  if(a==='rmfeed'){H.cal.feeds=H.cal.feeds.filter(f=>f.id!==id);saveH();return hub('cal')}
  if(a==='addvcf')return pick('.vcf,text/vcard',true,async fs=>{for(const f of fs)H.con.list.push(...parseVCF(await f.text()));saveH();hub('con')});
  if(a==='rmcon'){H.con.list=[];saveH();return hub('con')}
- if(a==='adddoc')return pick('.txt,.md,.csv,.json,text/*',true,async fs=>{for(const f of fs)H.docs.push({id:uid(),n:f.name,t:(await f.text()).slice(0,20000)});saveH();hub('doc')});
+ if(a==='adddoc')return pick('.pdf,.docx,.txt,.md,.csv,.tsv,.json,.html,.htm,.xml,.rtf,text/*',true,async fs=>{for(const f of fs){try{toast('Leggo «'+f.name+'»…');const t=await readDoc(f);if(t)H.docs.push({id:uid(),n:f.name,t:t.slice(0,20000)});else toast('Nessun testo trovato in «'+f.name+'»')}catch(e){toast('Impossibile leggere «'+f.name+'»')}}saveH();hub('doc')});
+ if(a==='pastedoc'||a==='pastenote'){try{const t=(await navigator.clipboard.readText()).trim();if(!t)return toast('Gli appunti sono vuoti');
+  if(a==='pastedoc'){H.docs.push({id:uid(),n:'Appunti incollati',t:t.slice(0,20000)});saveH();return hub('doc')}
+  H.notes.push({id:uid(),t:'Incollato',x:t.slice(0,4000)});saveH();return hub('note')}catch{return toast('Il browser non ha permesso di leggere gli appunti')}}
+ if(a==='pickcon'){try{const l=await navigator.contacts.select(['name','tel','email'],{multiple:true});l.forEach(c=>c.name&&c.name[0]&&H.con.list.push({n:c.name[0],tel:(c.tel||[])[0],mail:(c.email||[])[0]}));saveH();return hub('con')}catch{return}}
+ if(a==='addtask'){const v=$('#tnew').value.trim();if(!v)return;const d=$('#tdue').value;H.tasks.unshift({id:uid(),t:v,done:false,due:d?new Date(d+'T18:00').toISOString():''});saveH();return hub('task')}
+ if(a==='rmtask'){H.tasks=H.tasks.filter(t=>t.id!==id);saveH();return hub('task')}
+ if(a==='cltask'){H.tasks=H.tasks.filter(t=>!t.done);saveH();return hub('task')}
+ if(a==='expics'){const ev=(H.cal.feeds.find(f=>f.id==='will')||{ev:[]}).ev;return saveFile(new File([icsOf(...ev)],'eventi-will.ics',{type:'text/calendar'}))}
+ if(a==='wxset'){const q=$('#wxcity').value.trim();if(!q)return;try{const g=await geocode(q);if(!g)return toast('Città non trovata');H.wx={q,...g,t:0};H.on.wx=true;saveH();await refreshWx(true);greet();return hub('wx')}catch{return toast('Impossibile contattare il servizio meteo')}}
+ if(a==='wxgeo'){if(!navigator.geolocation)return toast('Posizione non disponibile');return navigator.geolocation.getCurrentPosition(async p=>{H.wx={q:'',name:'La tua posizione',lat:+p.coords.latitude.toFixed(2),lon:+p.coords.longitude.toFixed(2),t:0};H.on.wx=true;saveH();await refreshWx(true);greet();hub('wx')},()=>toast('Permesso di posizione negato'))}
+ if(a==='wxref'){await refreshWx(true);greet();return hub('wx')}
  if(a==='rmdoc'){H.docs=H.docs.filter(d=>d.id!==id);saveH();return hub('doc')}
  if(a==='addnote'){H.notes.push({id:uid(),t:id,x:''});saveH();return hub('note')}
  if(a==='rmnote'){H.notes=H.notes.filter(n=>n.id!==id);saveH();return hub('note')}
- if(a==='impmod')return pick('.lai,application/octet-stream',false,fs=>importModel(fs[0]));
+ if(a==='impmod')return pick('.will,.lai,.gguf,application/octet-stream',true,fs=>importFiles(fs));
+ if(a==='gurl')return importGgufUrl($('#gurl').value.trim());
  if(a==='persist'){const ok=await navigator.storage?.persist?.();toast(ok?'Archiviazione protetta':'Il browser non ha concesso la protezione');return storeFill()}
  if(a==='expdata')return saveFile(new File([JSON.stringify({v:1,hub:H,chats,model:modelId})],'willai-dati.json',{type:'application/json'}));
  if(a==='impdata')return pick('.json,application/json',false,async fs=>{try{const d=JSON.parse(await fs[0].text());if(!d.hub||!Array.isArray(d.chats))throw 0;H=d.hub;saveH();chats=d.chats;save();cur=null;greet();renderSide();renderChat();toast('Dati importati')}catch{toast('File non valido')}});
  if(a==='exp')return exportModel(id);
- if(a==='del'){if(confirm('Eliminare questo modello dalla cache del browser?')){await(await W()).deleteModelAllInfoInCache(id);if(id===modelId&&ready){await engine.unload();ready=false;pill()}return storeFill()}}
- if(a==='free'){await engine.unload();ready=false;pill();toast('Memoria RAM liberata');return storeFill()}
- if(a==='use'){$('#dh').close();load(id)}
+ if(a==='del'){if(confirm('Eliminare questo modello dal dispositivo?')){if(id===modelId&&ready)await release(null,true);
+   if(isG(id))await delG(id);else{await(await W()).deleteModelAllInfoInCache(id);CACHED.delete(id)}refreshUIs();return storeFill()}return}
+ if(a==='free'){await release();return}
+ if(a==='use'){$('#dh').close();load(id);return}
+ if(a==='dlonly'){$('#dh').close();load(id,{only:true});return}
  if(a==='models'){$('#dh').close();openModel()}});
 $('#hv').addEventListener('change',e=>{const t=e.target;
- if(t.dataset.tog){H.on[t.dataset.tog]=t.checked;saveH();greet()}
+ if(t.dataset.tog){H.on[t.dataset.tog]=t.checked;saveH();greet();if(t.dataset.tog==='wx'&&t.checked&&H.wx)refreshWx(true).then(()=>{greet();if(V==='wx')hub('wx')})}
+ if(t.dataset.tk){const k=H.tasks.find(x=>x.id===t.dataset.tk);if(k){k.done=t.checked;saveH();hub('task')}}
+ if(t.dataset.set){const k=t.dataset.set;H.set[k]=t.type==='checkbox'?t.checked:+t.value;saveH();if(k==='idle')touchIdle()}
  if('det' in t.dataset){H.con.det=t.checked;saveH()}});
 $('#hv').addEventListener('input',e=>{const t=e.target;
  if(t.dataset.f){H.me[t.dataset.f]=t.value.trim?t.value:t.value;saveH();greet()}
@@ -496,73 +672,145 @@ const MB=b=>b>=1e9?(b/1e9).toFixed(1)+' GB':Math.round(b/1e6)+' MB';
 function diag(){const pr=document.createElement('div');pr.style.cssText='position:fixed;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)';document.body.appendChild(pr);
  const cs=getComputedStyle(pr),t=cs.paddingTop,b=cs.paddingBottom;pr.remove();
  const el=$('#diag');if(el)el.textContent='Schermo: finestra '+innerWidth+'×'+innerHeight+', display '+screen.width+'×'+screen.height+', area sicura '+t+' / '+b+', app installata: '+(isStandalone()?'sì':'no')}
+function storeRows(){
+ const rows=[...MODELS.filter(m=>!AV||AV.has(m.id)),...G].sort((a,b)=>{const k=m=>m.id===modelId&&ready?0:CACHED.has(m.id)?1:2;return k(a)-k(b)||(a.r||0)-(b.r||0)});
+ $('#smods').innerHTML=rows.map(m=>{const[st,c]=stOf(m.id),g=isG(m.id),ca=CACHED.has(m.id),on=m.id===modelId&&ready,i=esc(m.id);
+  return `<div class="feed"><div class="tx"><b>${esc(m.n)}</b><small>${g?MB(m.size)+', importato':'Download '+m.s+', RAM '+GB(m.r)}</small></div><span class="pill2 ${c}">${st}</span></div>
+  <div class="acts" style="margin:-4px 0 4px">${on?'<button class="btn sm" data-act="free">Libera RAM</button>':ca?`<button class="btn sm primary" data-act="use" data-id="${i}">Carica in RAM</button>`:`<button class="btn sm" data-act="use" data-id="${i}">Scarica e carica</button><button class="btn sm" data-act="dlonly" data-id="${i}">Solo download</button>`}${ca&&!g?`<button class="btn sm" data-act="exp" data-id="${i}">Esporta .will</button>`:''}${ca?`<button class="btn sm" data-act="del" data-id="${i}">Elimina</button>`:''}</div>`}).join('');
+ rampUI()}
 async function storeFill(){diag();
  let est={},per=false;try{est=await navigator.storage.estimate();per=await navigator.storage.persisted()}catch{}
- const w=await W();
- const rows=await Promise.all(MODELS.map(async m=>({m,c:await w.hasModelInCache(m.id).catch(()=>false)})));
+ await refreshCached();
  if(V!=='store'||!$('#sinfo'))return;
  const p=est.quota?Math.min(100,est.usage/est.quota*100):0;
  $('#sinfo').innerHTML=est.quota?`<div class="meter"><i style="width:${p}%"></i></div><p class="hint">Usati ${MB(est.usage)} su circa ${MB(est.quota)} disponibili. Protezione dalla cancellazione: <b>${per?'attiva':'non attiva'}</b>.</p>`:'<p class="hint">Il browser non espone le informazioni sullo spazio.</p>';
- $('#smods').innerHTML=rows.map(({m,c})=>`<div class="feed"><div class="tx"><b>${m.n}, ${m.short}</b><small>${m.s}</small></div>${m.id===modelId&&ready?'<span class="pill2 ok">In uso</span>':c?'<span class="pill2 ok">In cache</span>':'<span class="pill2">Non scaricato</span>'}</div>
-  <div class="acts" style="margin:-4px 0 4px">${c?`<button class="btn sm" data-act="exp" data-id="${m.id}">Esporta file</button><button class="btn sm" data-act="del" data-id="${m.id}">Elimina</button>`:`<button class="btn sm" data-act="use" data-id="${m.id}">Scarica</button>`}${m.id===modelId&&ready?'<button class="btn sm" data-act="free">Libera RAM</button>':''}</div>`).join('')}
+ storeRows();pill()}
+// formato .will (i vecchi .lai restano leggibili)
 async function exportModel(id){
  try{const w=await W(),rec=w.prebuiltAppConfig.model_list.find(m=>m.model_id===id);
   const ent=[],parts=[];
   for(const cn of await caches.keys()){if(!cn.startsWith('webllm/'))continue;const c=await caches.open(cn);
    for(const rq of await c.keys()){if(!(rq.url.startsWith(rec.model)||rq.url===rec.model_lib))continue;
     const b=await(await c.match(rq)).blob();ent.push({c:cn,u:rq.url,s:b.size,t:b.type||'application/octet-stream'});parts.push(b)}}
-  if(!ent.length)return toast('Questo modello non è in cache');
+  if(!ent.length)return toast('Questo modello non è nel dispositivo');
   toast('Preparo il file, può richiedere un po\'…');
   const te=new TextEncoder(),head=te.encode(JSON.stringify({v:1,id,entries:ent})),len=new Uint8Array(4);new DataView(len.buffer).setUint32(0,head.length,true);
-  const file=new File([te.encode('LAIMODL1'),len,head,...parts],'willai-'+id+'.lai',{type:'application/octet-stream'});
+  const file=new File([te.encode('WILLMDL1'),len,head,...parts],'willai-'+id+'.will',{type:'application/octet-stream'});
   await saveFile(file);
  }catch(e){toast('Esportazione non riuscita: '+(e.message||e))}}
 async function importModel(f){
- try{if(await f.slice(0,8).text()!=='LAIMODL1')return toast('File non valido');
+ try{const mg=await f.slice(0,8).text();if(mg!=='WILLMDL1'&&mg!=='LAIMODL1')return toast('«'+f.name+'» non è un file .will valido');
   const hl=new DataView(await f.slice(8,12).arrayBuffer()).getUint32(0,true);
   const head=JSON.parse(await f.slice(12,12+hl).text());let off=12+hl,n=0;
   for(const e of head.entries){const c=await caches.open(e.c);
    await c.put(new Request(e.u),new Response(f.slice(off,off+e.s),{headers:{'Content-Type':e.t,'Content-Length':String(e.s)}}));
    off+=e.s;toast('Importo '+(++n)+' di '+head.entries.length+'…')}
-  modelId=head.id;db.set('model',modelId);toast('Modello importato: ora avvialo');if(V==='store')storeFill()
+  modelId=head.id;db.set('model',modelId);CACHED.add(head.id);toast('Modello importato: ora caricalo in RAM');refreshUIs()
  }catch(e){toast('Importazione non riuscita: '+(e.message||e))}}
+async function importFiles(fs){const g=fs.filter(f=>/\.gguf$/i.test(f.name));if(g.length)await importGguf(g);for(const f of fs.filter(f=>!/\.gguf$/i.test(f.name)))await importModel(f)}
+function regG(e){G=G.filter(x=>x.id!==e.id);G.push(e);db.set('gguf',G);CACHED.add(e.id);refreshUIs()}
+async function importGguf(fs){
+ try{fs=[...fs].sort((a,b)=>a.name.localeCompare(b.name));
+  for(const f of fs){const h=new Uint8Array(await f.slice(0,4).arrayBuffer());if(String.fromCharCode(...h)!=='GGUF')return toast('«'+f.name+'» non è un file GGUF valido')}
+  const wl=await WLC();let n=0;
+  for(const f of fs){const url='local://willai/'+f.name;toast('Salvo '+(++n)+' di '+fs.length+': '+f.name);
+   await wl.cacheManager.write(await wl.cacheManager.getNameFromURL(url),f.stream(),{etag:'local',originalSize:f.size,originalURL:url})}
+  const first=fs[0],tot=fs.reduce((a,f)=>a+f.size,0);
+  regG({id:'gguf:local:'+first.name,n:first.name.replace(/(-\d{5}-of-\d{5})?\.gguf$/i,''),size:tot,url:'local://willai/'+first.name,t:gt(tot),d:'Importato da file GGUF, livello '+TL[gt(tot)]});
+  toast('Modello importato: ora caricalo in RAM')
+ }catch(e){toast('Importazione non riuscita: '+(e.message||e))}}
+async function importGgufUrl(url){
+ if(!/^https:\/\/\S+\.gguf(\?\S*)?$/i.test(url))return toast('Serve un link https che termina con .gguf');
+ try{const wl=await WLC();let last=-1;toast('Download in corso…');
+  const mod=await wl.modelManager.downloadModel(url,{progressCallback:({loaded,total})=>{const p=total?Math.floor(loaded/total*100):0;if(p!==last){last=p;toast('Download '+p+'%')}}});
+  regG({id:'gguf:url:'+url,n:decodeURIComponent(url.split('?')[0].split('/').pop()).replace(/\.gguf$/i,''),size:mod.size,url,t:gt(mod.size),d:'Scaricato da link, livello '+TL[gt(mod.size)]});
+  toast('Scaricato: ora caricalo in RAM')
+ }catch(e){toast('Download non riuscito: '+(e.message||e))}}
+async function delG(id){const e=G.find(x=>x.id===id);if(!e)return;
+ try{const wl=await WLC(),m=(await wl.modelManager.getModels()).find(x=>x.url===e.url);if(m)await m.remove()}catch{}
+ G=G.filter(x=>x.id!==id);db.set('gguf',G);CACHED.delete(id);
+ if(modelId===id){modelId=MODELS.find(m=>m.rec).id;db.set('model',modelId)}}
+// ---- lettura documenti: PDF, Word, HTML, RTF e testo ----
+async function unzipEntry(buf,name){const v=new DataView(buf),u=new Uint8Array(buf);let e=u.length-22;while(e>=0&&v.getUint32(e,true)!==0x06054b50)e--;if(e<0)throw 0;
+ let n=v.getUint16(e+10,true),o=v.getUint32(e+16,true);
+ while(n--){const m=v.getUint16(o+10,true),cs=v.getUint32(o+20,true),nl=v.getUint16(o+28,true),xl=v.getUint16(o+30,true),cl=v.getUint16(o+32,true),lo=v.getUint32(o+42,true),nm=new TextDecoder().decode(u.subarray(o+46,o+46+nl));
+  if(nm===name){const st=lo+30+v.getUint16(lo+26,true)+v.getUint16(lo+28,true),d=u.subarray(st,st+cs);
+   if(m===0)return new TextDecoder().decode(d);
+   return await new Response(new Blob([d]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text()}
+  o+=46+nl+xl+cl}
+ return null}
+async function docxText(f){const x=await unzipEntry(await f.arrayBuffer(),'word/document.xml');if(!x)return '';
+ return x.replace(/<\/w:p>/g,'\n').replace(/<w:tab\/>/g,'\t').replace(/<[^>]+>/g,'').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&').replace(/\n{3,}/g,'\n\n').trim()}
+async function pdfText(f){const V='4.10.38',L=await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@'+V+'/build/pdf.min.mjs');
+ L.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@'+V+'/build/pdf.worker.min.mjs';
+ const pdf=await L.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise;let out='';
+ for(let i=1;i<=Math.min(pdf.numPages,40)&&out.length<20000;i++){const c=await(await pdf.getPage(i)).getTextContent();out+=c.items.map(x=>x.str+(x.hasEOL?'\n':'')).join(' ')+'\n'}
+ return out.trim()}
+async function readDoc(f){const n=f.name.toLowerCase();
+ if(n.endsWith('.pdf'))return pdfText(f);if(n.endsWith('.docx'))return docxText(f);
+ let t=await f.text();
+ if(/\.(html?|xml)$/.test(n))t=new DOMParser().parseFromString(t,'text/html').body?.textContent||t;
+ if(n.endsWith('.rtf'))t=t.replace(/\\par[d]?/g,'\n').replace(/\{\\\*[^}]*\}/g,'').replace(/\\'[0-9a-f]{2}/gi,'').replace(/\\[a-z]+-?\d* ?/gi,'').replace(/[{}]/g,'');
+ return t.replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim()}
+// ---- meteo (Open-Meteo, senza chiavi) e Wikipedia ----
+async function geocode(q){const r=await fetch('https://geocoding-api.open-meteo.com/v1/search?count=1&language=it&format=json&name='+encodeURIComponent(q),{signal:AbortSignal.timeout(6000)}).then(r=>r.json());const x=r.results&&r.results[0];return x?{name:x.name,lat:x.latitude,lon:x.longitude}:null}
+async function refreshWx(force){const w=H.wx;if(!H.on.wx||!w||w.lat==null)return false;if(!force&&Date.now()-(w.t||0)<108e5)return true;
+ try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+w.lat+'&longitude='+w.lon+'&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=4',{signal:AbortSignal.timeout(7000)}).then(r=>r.json());
+  w.cur={t:r.current.temperature_2m,c:r.current.weather_code};w.days=r.daily.time.map((d,i)=>({d,c:r.daily.weather_code[i],tx:r.daily.temperature_2m_max[i],tn:r.daily.temperature_2m_min[i],p:r.daily.precipitation_probability_max[i]}));w.t=Date.now();saveH();return true}catch{return false}}
+const ASK=/^\s*(chi (è|era|sono|erano|fu)|che cos'?è|cos'?è|cosa (è|sono|significa|fa)|quando (è|nacque|morì|fu|è stato)|dove (si trova|è|sono)|parlami di|dimmi (di|qualcosa su)|spiegami|come funziona|a cosa serve|qual è la (capitale|storia)|che differenza)/i;
+async function wiki(q){const k=q.replace(ASK,'').replace(/[?!.]/g,'').replace(/^\s*(il|lo|la|l'|i|gli|le|un|una|uno|di|del|della|dello|dei)\s+/i,'').trim()||q;
+ try{const s=await fetch('https://it.wikipedia.org/w/api.php?action=query&list=search&srlimit=1&format=json&origin=*&srsearch='+encodeURIComponent(k),{signal:AbortSignal.timeout(4500)}).then(r=>r.json());
+  const t=s.query&&s.query.search&&s.query.search[0]&&s.query.search[0].title;if(!t)return null;
+  const r=await fetch('https://it.wikipedia.org/api/rest_v1/page/summary/'+encodeURIComponent(t),{signal:AbortSignal.timeout(4500)}).then(r=>r.json());
+  return r.extract?{t:r.title,x:r.extract.slice(0,900),u:r.content_urls&&r.content_urls.desktop&&r.content_urls.desktop.page}:null}catch{return null}}
 // ---- invio ----
 function ui(){const g=$('#go');g.innerHTML=ic(busy?'stop':'send');g.disabled=!busy&&ready&&!$('#t').value.trim();g.setAttribute('aria-label',busy?'Interrompi':'Invia')}
-const INTENT=/(aggiung|mett|segn|inserisc|crea|prepar|ricord)\w*[\s\S]*(calendario|agenda|evento|nota|lista|spesa|appuntament)|promemoria|ricordam|ricordat/i;
+const INTENT=/(aggiung|mett|segn|inserisc|crea|prepar|ricord|salv|organizz|pianific)\w*[\s\S]*(calendario|agenda|evento|nota|lista|spesa|appuntament|attivit|da fare|contatt|rubrica|settimana|giornata)|promemoria|ricordam|ricordat|segnati|segnami/i;
+const PERS=/\b(mi chiamo|sono (allergic|vegetarian|vegan|celiac|nat[oa]|di |uno |una |un )|ho (un|una|due|tre|quattro|\d+) |abito|vivo (a|in)|lavoro|studio|frequento|il mio|la mia|mia (mamma|madre|sorella|nonna)|mio (padre|fratello|nonno)|mi piace|non mi piace|odio|adoro|preferisco|ho un esame|ho una verifica|devo (consegnare|studiare|preparare))\b/i;
 async function extract(text){const now=new Date(),wk=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'],p=n=>String(n).padStart(2,'0'),iso=d=>d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());
- const days=Array.from({length:8},(_,i)=>{const d=new Date(+now+i*864e5);return wk[d.getDay()]+' '+iso(d)+(i===0?' (oggi)':i===1?' (domani)':'')}).join(', ');
- const sys='Oggi è '+wk[now.getDay()]+' '+iso(now)+', ore '+p(now.getHours())+':'+p(now.getMinutes())+'. Prossimi giorni: '+days+'.\nSe il messaggio chiede di aggiungere un impegno o promemoria al calendario, o di creare una nota o una lista, rispondi SOLO con JSON: {"actions":[...]} dove ogni azione è {"type":"event","title":"...","start":"AAAA-MM-GGTHH:MM","loc":""} oppure {"type":"note","title":"...","text":"- voce\\n- voce"}. Se l\'impegno richiede preparazione (spesa, viaggio, festa, esame) aggiungi anche una nota con una lista pratica e realistica. Massimo 2 azioni. Se non c\'è nulla da aggiungere rispondi {"actions":[]}. Se l\'ora non è indicata usa le 09:00.';
- const r=await engine.chat.completions.create({messages:[{role:'system',content:sys},{role:'user',content:text}],response_format:{type:'json_object'},temperature:0,max_tokens:350});
- return(JSON.parse(r.choices[0].message.content).actions||[]).slice(0,2).map(a=>{
+ const days=Array.from({length:8},(_,i)=>{const d=new Date(+now+i*864e5);return wk[d.getDay()]+' '+iso(d)+(i===0?' (oggi)':i===1?' (domani)':'')}).join(', '),max=tier()>=3?5:2;
+ const sys='Oggi è '+wk[now.getDay()]+' '+iso(now)+', ore '+p(now.getHours())+':'+p(now.getMinutes())+'. Prossimi giorni: '+days+'.\nSe il messaggio chiede di aggiungere un impegno o promemoria al calendario, di creare una nota o una lista, di aggiungere un\'attività da fare o di salvare un contatto, rispondi SOLO con JSON: {"actions":[...]} dove ogni azione è {"type":"event","title":"...","start":"AAAA-MM-GGTHH:MM","loc":""} oppure {"type":"note","title":"...","text":"- voce\\n- voce"} oppure {"type":"task","title":"...","due":"AAAA-MM-GG"} oppure {"type":"contact","name":"...","tel":"...","mail":"..."}. Se l\'impegno richiede preparazione (spesa, viaggio, festa, esame) aggiungi anche una nota con una lista pratica e realistica.'+(max>2?' Per richieste ampie (organizza la settimana, prepara un piano) crea più eventi o attività distribuiti nei giorni giusti.':'')+' Massimo '+max+' azioni. Se non c\'è nulla da aggiungere rispondi {"actions":[]}. Se l\'ora non è indicata usa le 09:00.';
+ const r=await engine.chat.completions.create({messages:[{role:'system',content:sys},{role:'user',content:text}],response_format:{type:'json_object'},temperature:0,max_tokens:tier()>=3?600:350,...xb()});
+ return(jparse(r.choices[0].message.content).actions||[]).slice(0,max).map(a=>{
   if(a.type==='event'&&a.title&&!isNaN(new Date(a.start)))return{k:'event',s:'p',d:{title:String(a.title).slice(0,80),start:new Date(a.start).toISOString(),loc:String(a.loc||'').slice(0,80)}};
+  if(a.type==='task'&&a.title)return{k:'task',s:'p',d:{title:String(a.title).slice(0,80),due:a.due&&!isNaN(new Date(a.due+'T18:00'))?new Date(a.due+'T18:00').toISOString():''}};
+  if(a.type==='contact'&&a.name)return{k:'contact',s:'p',d:{name:String(a.name).slice(0,60),tel:String(a.tel||'').slice(0,30),mail:String(a.mail||'').slice(0,60)}};
   const tx=Array.isArray(a.text)?a.text.map(x=>'- '+x).join('\n'):String(a.text||'');
   return a.type==='note'&&tx?{k:'note',s:'p',d:{title:String(a.title||'Nota').slice(0,60),text:tx.slice(0,800)}}:null}).filter(Boolean)}
-async function title(c){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Scrivi un titolo di massimo 4 parole per questa conversazione, in italiano, senza virgolette né punteggiatura finale. Rispondi solo con il titolo.'},{role:'user',content:c.m.map(m=>m.role+': '+m.content.slice(0,200)).join('\n')}],temperature:.3,max_tokens:14});
- const t=r.choices[0].message.content.trim().replace(/^["«']|["»'.]$/g,'');if(t&&t.length<50){c.t=t;save();renderSide();if(cur===c.id)$('#title').textContent=t}}
-async function followups(row,q,a){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Dato questo scambio, proponi 3 possibili prossime richieste dell\'utente, brevi (massimo 8 parole), in prima persona. Rispondi SOLO con JSON {"next":["...","...","..."]}'},{role:'user',content:'Utente: '+q+'\nAssistente: '+a.slice(0,600)}],response_format:{type:'json_object'},temperature:.5,max_tokens:120});
- const l=(JSON.parse(r.choices[0].message.content).next||[]).filter(x=>typeof x==='string').slice(0,3);
+async function title(c){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Scrivi un titolo di massimo 4 parole per questa conversazione, in italiano, senza virgolette né punteggiatura finale. Rispondi solo con il titolo.'},{role:'user',content:c.m.map(m=>m.role+': '+m.content.slice(0,200)).join('\n')}],temperature:.3,max_tokens:14,...xb()});
+ const t=clean(r.choices[0].message.content).replace(/^["«']|["»'.]$/g,'');if(t&&t.length<50){c.t=t;save();renderSide();if(cur===c.id)$('#title').textContent=t}}
+async function followups(row,q,a){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Dato questo scambio, proponi 3 possibili prossime richieste dell\'utente, brevi (massimo 8 parole), in prima persona. Rispondi SOLO con JSON {"next":["...","...","..."]}'},{role:'user',content:'Utente: '+q+'\nAssistente: '+a.slice(0,600)}],response_format:{type:'json_object'},temperature:.5,max_tokens:120,...xb()});
+ const l=(jparse(r.choices[0].message.content).next||[]).filter(x=>typeof x==='string').slice(0,3);
  if(!l.length||!row.isConnected)return;const d=document.createElement('div');d.className='fu tags';d.innerHTML=l.map(x=>`<button data-q="${esc(x)}">${esc(x)}</button>`).join('');row.querySelector('.wrap').appendChild(d);follow()}
+async function memo(row,q,msg){const r=await engine.chat.completions.create({messages:[{role:'system',content:'Dal messaggio dell\'utente estrai al massimo 1 informazione personale durevole e utile da ricordare (allergie, preferenze, persone importanti, scadenze, obiettivi, abitudini). Ignora ciò che è temporaneo o ovvio. Scrivila in terza persona, in una frase breve. Rispondi SOLO con JSON {"facts":["..."]}; se non c\'è nulla di rilevante {"facts":[]}.'},{role:'user',content:q}],response_format:{type:'json_object'},temperature:0,max_tokens:100,...xb()});
+ const known=(H.notes.find(n=>n.t==='Ricordi di Will')||{x:''}).x,f=(jparse(r.choices[0].message.content).facts||[]).find(x=>typeof x==='string'&&x.length>6&&x.length<160&&!known.includes(x));
+ if(!f||!row.isConnected)return;msg.acts=[...(msg.acts||[]),{k:'mem',s:'p',d:{title:'Da ricordare',text:f}}];save();row.querySelector('.ax').innerHTML=actsHTML(msg)+srcHTML(msg);follow()}
 async function send(text){
  text=text.trim();if(!text||busy)return;
- if(!ready){openModel();return}
- busy=true;ui();await bg;
+ if(!ready&&!(await ensure())){if(!loading)openModel();return}
+ if(busy)return;
+ busy=true;ui();touchIdle();await bg;
  let c=chats.find(x=>x.id===cur);
  if(!c){c={id:uid(),t:text.length>44?text.slice(0,44)+'…':text,m:[],u:Date.now()};chats.unshift(c);cur=c.id;$('#title').textContent=c.t}
+ const lastAi=[...c.m].reverse().find(m=>m.role==='assistant');
  c.m.push({role:'user',content:text});$('#hero').hidden=true;$$('.fu').forEach(x=>x.remove());addMsg('user',text);
  $('#t').value='';$('#t').style.height='';renderSide();
- const row=addMsg('ai','',true),body=row.querySelector('.body');body.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';
- let acts=[];
- if(smartOk(2)&&INTENT.test(text)){try{acts=await extract(text)}catch{}}
- const hint=acts.length?'\n\nHai già preparato per l\'utente: '+acts.map(a=>a.k==='event'?'un evento "'+a.d.title+'" per '+fmtL(a.d.start):'una nota "'+a.d.title+'"').join('; ')+'. Conferma in una o due frasi cosa hai preparato e invita a premere il pulsante sotto per confermare. Non ripetere la lista.':'';
+ const row=addMsg('ai','',true),body=row.querySelector('.body'),dots='<span class="dots"><i></i><i></i><i></i></span>';body.innerHTML=dots;
+ let acts=[],src=null;const act=INTENT.test(text);
+ if(smartOk(2)&&act){try{acts=await extract(text)}catch{}}
+ if(H.on.web&&!act&&text.length<160&&ASK.test(text))src=await wiki(text);
+ const pro=smartOk(2)&&H.set.tips!==false&&!acts.length&&!/Consiglio:/i.test((lastAi&&lastAi.content)||'');
+ const hint=(acts.length?'\n\nHai già preparato per l\'utente: '+acts.map(a=>a.k==='event'?'un evento "'+a.d.title+'" per '+fmtL(a.d.start):a.k==='task'?'un\'attività "'+a.d.title+'"':a.k==='contact'?'il contatto "'+a.d.name+'"':'una nota "'+a.d.title+'"').join('; ')+'. Conferma in una o due frasi cosa hai preparato e invita a premere il pulsante sotto per confermare. Non ripetere la lista.':'')+(src?'\n\nInformazioni da Wikipedia («'+src.t+'»): '+src.x+'\nUsale per rispondere e non aggiungere fatti che non sono qui.':'');
  let acc='';
- try{const st=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt()+hint},...c.m.slice(-12).map(({role,content})=>({role,content}))],stream:true,temperature:.7,max_tokens:700});
-  for await(const ch of st){acc+=ch.choices[0]?.delta?.content||'';body.innerHTML=md(acc);follow()}
+ try{const st=await engine.chat.completions.create({messages:[{role:'system',content:sysPrompt(pro)+hint},...c.m.slice(-12).map(({role,content})=>({role,content}))],stream:true,temperature:.7,max_tokens:700,...xb()});
+  for await(const ch of st){acc+=ch.choices[0]?.delta?.content||'';const v=clean(acc);body.innerHTML=v?md(v):dots;follow()}
  }catch(e){acc=acc||'Qualcosa è andato storto: '+(e.message||e)}
- acc=acc||'(risposta vuota)';body.innerHTML=md(acc);row.querySelector('.orb').classList.remove('think');
- const msg={role:'assistant',content:acc,id:uid()};if(acts.length)msg.acts=acts;
- c.m.push(msg);c.u=Date.now();save();row.querySelector('.ax').innerHTML=actsHTML(msg);follow();
- busy=false;ui();renderSide();
+ acc=clean(acc)||'(risposta vuota)';body.innerHTML=md(acc);row.querySelector('.orb').classList.remove('think');
+ const msg={role:'assistant',content:acc,id:uid()};if(acts.length)msg.acts=acts;if(src)msg.src={t:src.t,u:src.u};
+ c.m.push(msg);c.u=Date.now();save();row.querySelector('.ax').innerHTML=actsHTML(msg)+srcHTML(msg);follow();
+ busy=false;ui();renderSide();touchIdle();
  if(smartOk(2)&&c.m.length===2)bgq(()=>title(c));
+ if(smartOk(2)&&!act&&text.length>12&&PERS.test(text))bgq(()=>memo(row,text,msg));
  if(smartOk(3))bgq(()=>followups(row,text,acc))}
 $('#f').onsubmit=e=>{e.preventDefault();if(busy)engine.interruptGenerate();else send($('#t').value)};
 $('#t').oninput=e=>{e.target.style.height='auto';e.target.style.height=Math.min(e.target.scrollHeight,140)+'px';ui()};
@@ -572,12 +820,16 @@ $('#msgs').addEventListener('click',e=>{
  const o=e.target.closest('[data-op]');if(!o)return;
  const box=o.closest('.act'),c=chats.find(x=>x.id===cur),m=c?.m.find(x=>x.id===box.dataset.m),a=m?.acts[+box.dataset.n];if(!a)return;
  if(o.dataset.op==='ics')return saveFile(new File([icsOf(a.d)],'evento.ics',{type:'text/calendar'}));
+ if(o.dataset.op==='vcf')return saveFile(new File([vcfOf(a.d)],(a.d.name||'contatto')+'.vcf',{type:'text/vcard'}));
  if(o.dataset.op==='skip')a.s='x';
  if(o.dataset.op==='add'){
   if(a.k==='event'){let f=H.cal.feeds.find(x=>x.id==='will');if(!f){f={id:'will',n:'Aggiunti da Will AI',ev:[]};H.cal.feeds.push(f)}f.ev.push({title:a.d.title,start:a.d.start,loc:a.d.loc})}
+  else if(a.k==='task')H.tasks.unshift({id:uid(),t:a.d.title,done:false,due:a.d.due||''});
+  else if(a.k==='contact')H.con.list.push({n:a.d.name,tel:a.d.tel,mail:a.d.mail});
+  else if(a.k==='mem')remember(a.d.text);
   else H.notes.push({id:uid(),t:a.d.title,x:a.d.text});
-  a.s='d';saveH();toast(a.k==='event'?'Aggiunto al calendario di Will AI. Usa File .ics per quello del telefono':'Nota salvata');greet()}
- save();box.parentElement.innerHTML=actsHTML(m)});
+  a.s='d';saveH();toast(a.k==='event'?'Aggiunto al calendario di Will AI. Usa File .ics per quello del telefono':a.k==='task'?'Attività aggiunta':a.k==='contact'?'Contatto salvato. Usa File .vcf per la rubrica del telefono':a.k==='mem'?'Lo ricorderò':'Nota salvata');greet()}
+ save();box.parentElement.innerHTML=actsHTML(m)+srcHTML(m)});
 $$('[data-close]').forEach(b=>b.onclick=()=>{b.closest('dialog').close();greet()});
 $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){d.close();greet()}}));
 const isStandalone=()=>navigator.standalone||matchMedia('(display-mode: standalone)').matches;
@@ -585,9 +837,13 @@ function fit(){const gap=screen.height-innerHeight,r=document.documentElement.st
  if(isStandalone()&&gap>20&&gap<120)r.setProperty('--vh',screen.height+'px');else r.removeProperty('--vh');diag()}
 ['resize','orientationchange','pageshow'].forEach(ev=>addEventListener(ev,()=>setTimeout(fit,60)));
 fit();
+(function(){const q=new URLSearchParams(location.search),tx=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n');
+ if(tx){H.notes.push({id:uid(),t:q.get('title')||'Condiviso',x:tx});saveH();history.replaceState(null,'',location.pathname);setTimeout(()=>toast('Aggiunto alle note'),700)}
+ if('launchQueue' in window)launchQueue.setConsumer(async p=>{const fs=[];for(const h of p.files||[])fs.push(await h.getFile());if(fs.length){hub('store');importFiles(fs)}})})();
 greet();renderSide();renderChat();pill();
+refreshWx().then(ok=>ok&&greet());
 if(!db.get('seen',0)){db.set('seen',1);setTimeout(()=>hub('me'),500)}
-else if(db.get('model',null)&&navigator.gpu)load(modelId);
+else if(db.get('model',null)){if(H.set.auto!==false&&(isG(modelId)||navigator.gpu))load(modelId);else refreshCached().then(pill)}
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
