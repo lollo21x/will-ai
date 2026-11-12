@@ -1,4 +1,4 @@
-const CACHE = 'will-ai-v5';
+const CACHE = 'will-ai-v6';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon.svg', './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {}))); self.skipWaiting(); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== CACHE && !x.startsWith('webllm/')).map(x => caches.delete(x))))); self.clients.claim(); });
