@@ -1,0 +1,29 @@
+name: Build IPA
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  ipa:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: brew install xcodegen
+      - run: bash ios/scripts/vendor.sh
+      - run: cd ios && xcodegen generate
+      - name: Build (non firmato, lo firma AltStore)
+        run: |
+          xcodebuild -project ios/WillAI.xcodeproj -scheme WillAI -configuration Release \
+            -sdk iphoneos -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+          mkdir Payload && cp -R build/Build/Products/Release-iphoneos/WillAI.app Payload/
+          zip -qry WillAI.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with: { name: WillAI-ipa, path: WillAI.ipa }
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with: { files: WillAI.ipa }
